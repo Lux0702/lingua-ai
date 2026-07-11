@@ -1,0 +1,11 @@
+{
+  "evaluation": {
+    "questionId": "q1",
+    "userAnswer": "Hello",
+    "correctAnswer": "Hello",
+    "isCorrect": true,
+    "score": 100,
+    "feedback": "Correct!",
+    "explanation": "你好 is the standard greeting."
+  }
+}

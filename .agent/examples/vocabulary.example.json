@@ -1,0 +1,20 @@
+{
+  "vocabulary": [
+    {
+      "id": "v1",
+      "word": "你好",
+      "pinyin": "nǐ hǎo",
+      "meaning": "Hello",
+      "example": "你好！",
+      "translation": "Hello!"
+    },
+    {
+      "id": "v2",
+      "word": "谢谢",
+      "pinyin": "xiè xie",
+      "meaning": "Thank you",
+      "example": "谢谢你的帮助。",
+      "translation": "Thank you for your help."
+    }
+  ]
+}

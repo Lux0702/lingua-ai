@@ -1,0 +1,18 @@
+{
+  "grammar": [
+    {
+      "id": "g1",
+      "title": "Basic Greeting",
+      "explanation": "你好 is the most common greeting in Chinese.",
+      "example": "你好！",
+      "translation": "Hello!"
+    },
+    {
+      "id": "g2",
+      "title": "Introducing Yourself",
+      "explanation": "Use 我叫 to introduce your name.",
+      "example": "我叫小明。",
+      "translation": "My name is Xiaoming."
+    }
+  ]
+}

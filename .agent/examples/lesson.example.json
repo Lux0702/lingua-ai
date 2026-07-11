@@ -1,0 +1,68 @@
+{
+  "lesson": {
+    "id": "lesson-001",
+    "language": "zh",
+    "course": "A Course in Contemporary Chinese",
+    "module": "Module 1",
+    "lessonNumber": 1,
+    "title": "Greetings",
+    "content": {
+      "overview": "Learn basic greetings in Chinese.",
+      "objectives": ["Say hello", "Introduce yourself", "Ask someone's name"],
+      "vocabulary": [
+        {
+          "id": "v1",
+          "word": "你好",
+          "pinyin": "nǐ hǎo",
+          "meaning": "Hello",
+          "example": "你好，我叫小明。",
+          "translation": "Hello, my name is Xiaoming."
+        }
+      ],
+      "grammar": [
+        {
+          "id": "g1",
+          "title": "Basic Greeting",
+          "explanation": "你好 is the standard greeting.",
+          "example": "你好！",
+          "translation": "Hello!"
+        }
+      ],
+      "dialogue": {
+        "title": "Greeting Conversation",
+        "lines": [
+          {
+            "speaker": "A",
+            "text": "你好！",
+            "translation": "Hello!"
+          },
+          {
+            "speaker": "B",
+            "text": "你好！你叫什么名字？",
+            "translation": "Hello! What's your name?"
+          }
+        ]
+      },
+      "reading": {
+        "title": "Reading",
+        "paragraphs": [
+          {
+            "text": "你好，我叫小明。",
+            "pinyin": "Nǐ hǎo, wǒ jiào Xiǎomíng.",
+            "translation": "Hello, my name is Xiaoming."
+          }
+        ]
+      },
+      "exercises": [
+        {
+          "id": "e1",
+          "type": "multiple_choice",
+          "question": "What does 你好 mean?",
+          "options": ["Hello", "Goodbye", "Thank you", "Sorry"],
+          "answer": "Hello",
+          "explanation": "你好 is the standard greeting."
+        }
+      ]
+    }
+  }
+}

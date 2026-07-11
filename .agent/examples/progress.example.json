@@ -1,0 +1,10 @@
+{
+  "progress": {
+    "courseId": "acc-book-1",
+    "lessonId": "lesson-001",
+    "completed": true,
+    "score": 90,
+    "timeSpent": 1200,
+    "completedAt": "2026-07-09T07:00:00Z"
+  }
+}

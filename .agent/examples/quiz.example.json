@@ -1,0 +1,23 @@
+{
+  "quiz": {
+    "lessonId": "lesson-001",
+    "title": "Lesson 1 Quiz",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "What does 你好 mean?",
+        "options": ["Hello", "Thank you", "Goodbye", "Sorry"],
+        "answer": "Hello",
+        "explanation": "你好 is the standard greeting."
+      },
+      {
+        "id": "q2",
+        "type": "fill_blank",
+        "question": "_____ means Thank you.",
+        "answer": "谢谢",
+        "explanation": "谢谢 means Thank you."
+      }
+    ]
+  }
+}
