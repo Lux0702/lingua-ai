@@ -26,7 +26,7 @@ export function LessonPage() {
   }
 
   function handlePrevious() {
-    setTab((prev) => Math.max(prev - 1, 0));
+    setTab((prev) => Math.max(prev - 1, 0)); 
   }
   return (
     <div className="space-y-6">
