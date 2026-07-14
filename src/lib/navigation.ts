@@ -21,21 +21,21 @@ export const navigation = [
     href: "/courses",
     icon: BookOpen,
   },
-  {
-    title: "Lessons",
-    href: "/lessons",
-    icon: GraduationCap,
-  },
-  {
-    title: "Vocabulary",
-    href: "/vocabulary",
-    icon: Languages,
-  },
-  {
-    title: "Grammar",
-    href: "/grammar",
-    icon: BookText,
-  },
+  // {
+  //   title: "Lessons",
+  //   href: "/lessons",
+  //   icon: GraduationCap,
+  // },
+  // {
+  //   title: "Vocabulary",
+  //   href: "/vocabulary",
+  //   icon: Languages,
+  // },
+  // {
+  //   title: "Grammar",
+  //   href: "/grammar",
+  //   icon: BookText,
+  // },
   {
     title: "Quiz",
     href: "/quiz",
@@ -43,17 +43,17 @@ export const navigation = [
   },
   {
     title: "AI Tutor",
-    href: "/ai",
+    href: "/ai-tutor",
     icon: Bot,
   },
-  {
-    title: "Progress",
-    href: "/progress",
-    icon: ChartColumn,
-  },
-  {
-    title: "Settings",
-    href: "/settings",
-    icon: Settings,
-  },
+  // {
+  //   title: "Progress",
+  //   href: "/progress",
+  //   icon: ChartColumn,
+  // },
+  // {
+  //   title: "Settings",
+  //   href: "/settings",
+  //   icon: Settings,
+  // },
 ];

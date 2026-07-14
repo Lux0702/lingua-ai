@@ -16,7 +16,7 @@ interface UploadRequest {
   level: Level;
 }
 
-export default function UploadPage() {
+export  function UploadPage() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 

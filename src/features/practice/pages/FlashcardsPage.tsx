@@ -11,8 +11,12 @@ import { FlashcardProgress } from "../components/flashcards/FlashcardProgress";
 
 import { useFlashcards } from "../hooks/useFlashcards";
 import { useEffect } from "react";
+import { FlashcardFinished } from "../components/flashcards/FlashcardFinished";
+import { useState } from "react";
+import { getLessonProgress, saveLessonProgress } from "@/features/progress/services/storage";
 
 export function FlashcardsPage() {
+  const [finished, setFinished] = useState(false);
   const { lessonId } = useParams<{
     lessonId: string;
   }>();
@@ -48,12 +52,43 @@ useEffect(() => {
   };
 }, [flashcards.flip, flashcards.next, flashcards.previous]);
 
+useEffect(() => {
+  if (!finished || !lesson) return;
+
+  const old = getLessonProgress(lesson.id);
+
+  saveLessonProgress({
+    lessonId: lesson.id,
+
+    flashcardsCompleted: true,
+
+    quizCompleted: old?.quizCompleted ?? false,
+
+    quizScore: old?.quizScore ?? 0,
+
+    completed: old?.quizCompleted ?? false,
+
+    lastStudiedAt: new Date().toISOString(),
+  });
+}, [finished, lesson]);
   if (!lesson) {
     return <p>Lesson not found.</p>;
   }
 
   if (!flashcards.currentCard) {
     return <FlashcardEmpty />;
+  }
+  if (finished) {
+    return (
+      <FlashcardFinished
+        courseId={lesson.courseId}
+        lessonId={lesson.id}
+        onRestart={() => {
+          flashcards.restart();
+          setFinished(false);
+        }}
+      />
+    );
   }
 
   return (
@@ -84,6 +119,7 @@ useEffect(() => {
         onFlip={flashcards.flip}
         onNext={flashcards.next}
         onRestart={flashcards.restart}
+        onFinish={() => setFinished(true)}
       />
     </div>
   );

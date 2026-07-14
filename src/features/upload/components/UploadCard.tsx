@@ -1,25 +1,121 @@
 "use client";
 
-import { ChangeEvent } from "react";
+import { ChangeEvent, useState } from "react";
 
-interface UploadCardProps {
-  onUpload(file: File): void;
+import type { Language, Level } from "@/services/ai/contracts";
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+import { Button } from "@/components/ui/button";
+
+export interface UploadRequest {
+  file: File;
+  language: Language;
+  level: Level;
 }
 
-export function UploadCard({ onUpload }: UploadCardProps) {
-  function handleChange(event: ChangeEvent<HTMLInputElement>) {
-    const file = event.target.files?.[0];
+interface UploadCardProps {
+  loading?: boolean;
 
+  onUpload(request: UploadRequest): void | Promise<void>;
+}
+
+export function UploadCard({ loading = false, onUpload }: UploadCardProps) {
+  const [file, setFile] = useState<File | null>(null);
+
+  const [language, setLanguage] = useState<Language>("zh");
+
+  const [level, setLevel] = useState<Level>("beginner");
+
+  function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
+    const selectedFile = event.target.files?.[0];
+
+    if (!selectedFile) return;
+
+    setFile(selectedFile);
+  }
+
+  function handleSubmit() {
     if (!file) return;
 
-    onUpload(file);
+    onUpload({
+      file,
+      language,
+      level,
+    });
   }
 
   return (
-    <div className="rounded-xl border p-6">
-      <h2 className="text-lg font-semibold">Upload Learning Material</h2>
+    <div className="space-y-6 rounded-xl border p-6">
+      <div>
+        <h2 className="text-xl font-semibold">Upload Learning Material</h2>
 
-      <input type="file" accept=".pdf,.txt,.docx" onChange={handleChange} />
+        <p className="text-sm text-muted-foreground">
+          Upload a PDF, DOCX or TXT file to generate a lesson with AI.
+        </p>
+      </div>
+
+      <div className="grid gap-4 md:grid-cols-2">
+        <div>
+          <label className="mb-2 block text-sm font-medium">Language</label>
+
+          <Select
+            value={language}
+            onValueChange={(value) => setLanguage(value as Language)}
+          >
+            <SelectTrigger>
+              <SelectValue />
+            </SelectTrigger>
+
+            <SelectContent>
+              <SelectItem value="zh">Chinese</SelectItem>
+
+              <SelectItem value="en">English</SelectItem>
+
+              <SelectItem value="ja">Japanese</SelectItem>
+
+              <SelectItem value="ko">Korean</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div>
+          <label className="mb-2 block text-sm font-medium">Level</label>
+
+          <Select
+            value={level}
+            onValueChange={(value) => setLevel(value as Level)}
+          >
+            <SelectTrigger>
+              <SelectValue />
+            </SelectTrigger>
+
+            <SelectContent>
+              <SelectItem value="beginner">Beginner</SelectItem>
+
+              <SelectItem value="intermediate">Intermediate</SelectItem>
+
+              <SelectItem value="advanced">Advanced</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
+      <input type="file" accept=".pdf,.docx,.txt" onChange={handleFileChange} />
+
+      {file && (
+        <p className="text-sm text-muted-foreground">Selected: {file.name}</p>
+      )}
+
+      <Button disabled={!file || loading} onClick={handleSubmit}>
+        {loading ? "Generating..." : "Generate Lesson"}
+      </Button>
     </div>
   );
 }

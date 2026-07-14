@@ -38,7 +38,7 @@ export function useFlashcards(cards: Vocabulary[]) {
     setIndex(0);
     setFlipped(false);
   }
-
+const finished = cards.length > 0 && index === cards.length - 1 && flipped;
   return {
     currentCard,
     currentIndex: index,
@@ -47,6 +47,8 @@ export function useFlashcards(cards: Vocabulary[]) {
     flipped,
     isFirst: index === 0,
     isLast: index === cards.length - 1,
+    finished,
+
     flip,
     next,
     previous,

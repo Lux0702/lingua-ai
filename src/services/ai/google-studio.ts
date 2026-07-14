@@ -1,5 +1,5 @@
 import { GoogleGenAI } from "@google/genai";
-
+import type { Exercise } from "@/features/lesson/types";
 import type { AgentService } from "./agent.service";
 import type {
   GenerateLessonRequest,
@@ -10,85 +10,38 @@ import type {
   EvaluateAnswerResponse,
 } from "./types";
 import { buildLessonPrompt } from "./prompt-builder";
+import { buildQuizPrompt } from "./buildQuizPrompt";
 import { parseJson } from "./parser";
 import type { LessonSchema } from "@/schemas/lesson";
 import { ai } from "./google";
 
-async function generateContentWithRetry(
-  prompt: string,
-  mimeType: string,
-  data: string,
-) {
-  const maxRetries = 1;
+async function generateContent(prompt: string) {
+  try {
+    return await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: prompt,
+    });
+  } catch (error) {
+    console.error(error);
 
-  for (let i = 0; i < maxRetries; i++) {
-    try {
-      // const uploadedFile = await ai.files.upload({
-      //   file: data,
-      //   config: {
-      //     mimeType,
-      //   },
-      // });
-
-      // Gọi API chuẩn của @google/genai
-      return await ai.models.generateContent({
-        model: "gemini-3.5-flash",
-        contents: [
-          {
-            role: "user",
-            parts: [
-              {
-                inlineData: {
-                  data: data,
-                  mimeType: "application/pdf", // "image/png" sẽ được truyền vào đây
-                },
-              },
-              {
-                // Key bắt buộc phải là "text"
-                text: prompt,
-              },
-            ],
-          },
-        ],
-      });
-    } catch (error: any) {
-      console.error("===== GEMINI ERROR =====");
-      console.dir(error, { depth: null });
-
-      const status =
-        error?.status ?? error?.response?.status ?? error?.error?.code;
-
-      console.log("Status:", status);
-      console.log("Message:", error?.message);
-
-      if (![429, 500, 502, 503, 504].includes(status)) {
-        throw error;
-      }
-
-      if (i === maxRetries - 1) {
-        throw error;
-      }
-
-      await new Promise((resolve) => setTimeout(resolve, 2000 * (i + 1)));
-    }
+    throw new Error("Failed to generate lesson.");
   }
-
-  throw new Error("Failed to generate content.");
-};
+}
 export const googleStudioAgent: AgentService = {
   async generateLesson({
     language,
     level,
-    mimeType,
-    data,
+    content,
   }: GenerateLessonRequest): Promise<GenerateLessonResponse> {
     const prompt = buildLessonPrompt({
       language,
       level,
+      content,
     });
 
-    const response = await generateContentWithRetry(prompt, mimeType, data);
-
+    const response = await generateContent(prompt);
+    console.log("===== RAW GEMINI =====");
+    console.log(response.text);
     const lesson = parseJson<LessonSchema>(response.text);
 
     return {
@@ -96,10 +49,28 @@ export const googleStudioAgent: AgentService = {
     };
   },
 
-  async generateQuiz(
-    request: GenerateQuizRequest,
-  ): Promise<GenerateQuizResponse> {
-    throw new Error("Not implemented");
+  async generateQuiz({
+    courseId,
+    lessons,
+    difficulty,
+    questionCount,
+    questionTypes,
+  }: GenerateQuizRequest): Promise<GenerateQuizResponse> {
+    const prompt = buildQuizPrompt({
+      courseId,
+      lessons,
+      difficulty,
+      questionCount,
+      questionTypes,
+    });
+
+    const response = await generateContent(prompt);
+
+    const exercises = parseJson<Exercise[]>(response.text);
+
+    return {
+      exercises,
+    };
   },
 
   async evaluateAnswer(

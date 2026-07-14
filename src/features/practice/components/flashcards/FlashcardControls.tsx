@@ -14,7 +14,7 @@ interface FlashcardControlsProps {
   onFlip(): void;
 
   onRestart(): void;
-
+  onFinish(): void;
 }
 export function FlashcardControls({
   flipped,
@@ -24,6 +24,7 @@ export function FlashcardControls({
   onFlip,
   onNext,
   onRestart,
+  onFinish,
 }: FlashcardControlsProps) {
   return (
     <div className="flex flex-wrap justify-center gap-3">
@@ -35,15 +36,15 @@ export function FlashcardControls({
         {flipped ? "Hide" : "Reveal"}
       </Button>
 
-      <Button disabled={isLast} onClick={onNext}>
-        Next
-      </Button>
+      {isLast ? (
+        <Button onClick={onFinish}>Finish</Button>
+      ) : (
+        <Button onClick={onNext}>Next</Button>
+      )}
 
       <Button variant="outline" onClick={onRestart}>
         Restart
       </Button>
-
-     
     </div>
   );
 }

@@ -19,7 +19,7 @@ export function RecentLessonsCard({ lessons }: RecentLessonsCardProps) {
           {lessons.map((lesson) => (
             <li key={lesson.id}>
               <Link
-                href={`/lessons/${lesson.id}`}
+                href={`/courses/${lesson.courseId}/lessons/${lesson.id}`}
                 className="block rounded-lg border p-4 transition hover:bg-muted"
               >
                 <h3 className="font-medium">{lesson.title}</h3>

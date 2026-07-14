@@ -1,3 +1,6 @@
+"use client";
+
+
 import type { LessonSchema } from "@/schemas/lesson";
 
 import { LessonHeader } from "./LessonHeader";
@@ -15,9 +18,9 @@ interface LessonContentProps {
 export function LessonContent({ lesson }: LessonContentProps) {
   return (
     <>
-      <LessonHeader title={lesson.title} overview={lesson.overview} />
+      <LessonHeader title={lesson.title} overview={lesson.overview}  />
 
-      <ObjectivesCard objectives={lesson.objectives} />
+      <ObjectivesCard objectives={lesson.objectives} lessonId={lesson.id} />
 
       <VocabularyCard vocabulary={lesson.vocabulary} />
 
@@ -28,6 +31,7 @@ export function LessonContent({ lesson }: LessonContentProps) {
       <ReadingCard reading={lesson.reading} />
 
       <ExerciseCard exercises={lesson.exercises} />
+      
     </>
   );
 }

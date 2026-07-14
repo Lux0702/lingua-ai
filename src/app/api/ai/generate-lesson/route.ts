@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 import { AI_TASKS, Language, Level } from "@/services/ai";
 import { googleStudioAgent } from "@/services/ai/google-studio";
-
+import { extractText } from "@/services/extractor";
 export async function POST(request: Request) {
   try {
     const formData = await request.formData();
@@ -16,9 +16,7 @@ export async function POST(request: Request) {
     }
 
     // 1. CHUYỂN ĐỔI FILE THÀNH BASE64
-    const arrayBuffer = await file.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
-    const base64Data = buffer.toString("base64"); // Lấy chuỗi base64
+    const content = await extractText(file);
 
     const language = formData.get("language") as Language;
     const level = formData.get("level") as Level;
@@ -27,9 +25,7 @@ export async function POST(request: Request) {
       task: AI_TASKS.GENERATE_LESSON,
       language,
       level,
-      fileName: file.name,
-      mimeType: file.type,
-      data: base64Data, // 2. TRUYỀN CHUỖI BASE64 THAY VÌ FILE OBJECT
+      content,
     });
 
     return NextResponse.json(result);

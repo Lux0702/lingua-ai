@@ -24,6 +24,7 @@ export function ContinueLearningCard({ lesson }: ContinueLearningCardProps) {
       </Card>
     );
   }
+  console.log(lesson);  
 
   return (
     <Card>
@@ -39,7 +40,7 @@ export function ContinueLearningCard({ lesson }: ContinueLearningCardProps) {
         </div>
 
         <Button className="w-full">
-          <Link href={`/local/${lesson.id}`}>Continue</Link>
+          <Link href={`/courses/${lesson.courseId}/lessons/${lesson.id}`}>Continue</Link>
         </Button>
       </CardContent>
     </Card>

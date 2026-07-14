@@ -9,25 +9,30 @@ export interface GenerateLessonRequest {
 
   level: Level;
 
-  fileName: string;
-
-  mimeType: string;
-
-  data: string;
+  content: string;
 }
 
 export interface GenerateLessonResponse {
   lesson: LessonSchema;
 }
+import type { Lesson } from "@/features/lesson/types";
 
 export interface GenerateQuizRequest {
-  task: typeof AI_TASKS.GENERATE_QUIZ;
+  courseId: string;
 
-  lessonId: string;
+  lessons: LessonSchema[];
+
+  difficulty: "easy" | "medium" | "hard";
+
+  questionCount: number;
+
+  questionTypes: ("multiple_choice" | "fill_blank")[];
 }
+import type { Exercise } from "@/features/lesson/types";
 
 export interface GenerateQuizResponse {
-  quiz: unknown;
+  exercises: Exercise[];
+
 }
 
 export interface EvaluateAnswerRequest {

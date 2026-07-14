@@ -7,6 +7,7 @@ import type { Course } from "@/features/course/types";
 interface CourseCardProps {
   courses: Course[];
 }
+import Link  from "next/link";
 export function RecentCoursesCard({ courses }: CourseCardProps) {
   return (
     <Card>
@@ -21,13 +22,18 @@ export function RecentCoursesCard({ courses }: CourseCardProps) {
               key={course.id}
               className="flex items-center justify-between rounded-lg border p-3"
             >
-              <div className="flex items-center justify-between gap-2">
-                <div>
-                  <p className="font-medium">{course.title}</p>
-                </div>
+              <Link
+                href={`/courses/${course.id}`}
+                className="transition hover:bg-transparent"
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <div>
+                    <p className="font-medium">{course.title}</p>
+                  </div>
 
-                <Badge>{LANGUAGES[course.languageCode]}</Badge>
-              </div>
+                  <Badge>{LANGUAGES[course.languageCode]}</Badge>
+                </div>
+              </Link>
             </li>
           ))}
         </ul>
