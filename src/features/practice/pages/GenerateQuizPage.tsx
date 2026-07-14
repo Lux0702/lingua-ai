@@ -37,7 +37,7 @@ export function GenerateQuizPage() {
         },
 
         body: JSON.stringify({
-          courseId: lesson.courseId,
+          courseId: lesson?.courseId,
           lessons: [lesson],
           difficulty: "medium",
           questionCount: 20,

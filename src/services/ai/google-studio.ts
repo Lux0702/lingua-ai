@@ -42,7 +42,7 @@ export const googleStudioAgent: AgentService = {
     const response = await generateContent(prompt);
     console.log("===== RAW GEMINI =====");
     console.log(response.text);
-    const lesson = parseJson<LessonSchema>(response.text);
+    const lesson = parseJson<LessonSchema>(response.text || "");
 
     return {
       lesson,
@@ -66,7 +66,7 @@ export const googleStudioAgent: AgentService = {
 
     const response = await generateContent(prompt);
 
-    const exercises = parseJson<Exercise[]>(response.text);
+    const exercises = parseJson<Exercise[]>(response.text|| "" );
 
     return {
       exercises,

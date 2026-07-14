@@ -5,5 +5,5 @@ export async function extractPdf(file: File): Promise<string> {
 
   const result = await extractText(new Uint8Array(arrayBuffer));
 
-  return result.text;
+  return result.text.join("\n");
 }

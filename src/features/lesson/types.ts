@@ -1,3 +1,4 @@
+import { Language } from './../../services/ai/contracts';
 export interface Vocabulary {
   id: string;
   word: string;
@@ -7,6 +8,7 @@ export interface Vocabulary {
   example?: string;
   translation?: string;
   notes?: string;
+  language?: Language;
 }
 
 export interface Grammar {

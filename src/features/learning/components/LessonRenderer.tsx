@@ -16,7 +16,7 @@ export function LessonRenderer({ lesson }: Props) {
     <div className="space-y-6">
       <LessonHeader title={lesson.title} overview={lesson.overview} />
 
-      <ObjectivesCard objectives={lesson.objectives} />
+      <ObjectivesCard objectives={lesson.objectives} lessonId={lesson.id} />
 
       <VocabularyCard vocabulary={lesson.vocabulary} />
 
