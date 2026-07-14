@@ -94,7 +94,7 @@ export default function QuizGeneratorPage() {
       const result: GenerateQuizResponse = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.message ?? "Failed to generate quiz!.");
+        throw new Error( "Failed to generate quiz!.");
       }
 
       setQuiz(result);
