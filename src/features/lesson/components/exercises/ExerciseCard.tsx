@@ -4,21 +4,19 @@ import { MultipleChoice } from "./MultipleChoice";
 
 import type { Exercise } from "../../types";
 import { ExerciseRenderer } from "./ExerciseRenderer";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import { Button } from "@/components/ui/button";
 interface ExerciseCardProps {
   exercises: Exercise[];
 }
 
-export function ExerciseCard({
-  exercises,
-}: ExerciseCardProps) {
+export function ExerciseCard({ exercises }: ExerciseCardProps) {
   return (
     <Card>
       <CardHeader>
         <CardTitle>Exercises</CardTitle>
       </CardHeader>
-      
+
       <CardContent className="space-y-6">
         {exercises.map((exercise) => (
           <ExerciseRenderer key={exercise.id} exercise={exercise} />
@@ -26,5 +24,4 @@ export function ExerciseCard({
       </CardContent>
     </Card>
   );
-
 }

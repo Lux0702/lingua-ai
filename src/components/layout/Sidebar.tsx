@@ -1,9 +1,9 @@
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import { navigation } from "@/lib/navigation";
 
 export function Sidebar() {
   return (
-    <aside className="w-64 border-r bg-background">
+    <aside className="w-64 border-r bg-background h-screen">
       <div className="p-6">
         <h2 className="text-xl font-bold">Polyglot AI</h2>
       </div>

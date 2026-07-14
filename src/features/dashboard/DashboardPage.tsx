@@ -9,7 +9,7 @@ import { RecentLessonsCard } from "./components/RecentLessonsCard";
 import { useDashboard } from "./hooks/useDashboard";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 
 export function DashboardPage() {
   const { stats, recentLessons, continueLesson, recentCourses } =

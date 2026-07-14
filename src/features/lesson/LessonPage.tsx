@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useParams } from "next/navigation";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 
 import { getLesson } from "@/features/lesson/services/storage";
 import { Progress } from "@/components/ui/progress";
@@ -11,10 +11,11 @@ import { LessonTabs } from "./components/lessons/LessonTabs";
 import { LessonBody } from "./components/lessons/LessonBody";
 import { Button } from "@/components/ui/button";
 import { TOTAL_TABS } from "./constants";
+import { useTransitionRouter } from "next-view-transitions";
 export function LessonPage() {
   const { lessonId } = useParams();
   const lesson = getLesson(lessonId as string);
-
+  const router = useTransitionRouter();
   const [tab, setTab] = useState(0);
 
   if (!lesson) {
@@ -26,8 +27,9 @@ export function LessonPage() {
   }
 
   function handlePrevious() {
-    setTab((prev) => Math.max(prev - 1, 0)); 
+    setTab((prev) => Math.max(prev - 1, 0));
   }
+
   return (
     <div className="space-y-6">
       <LessonHeader title={lesson.title} overview={lesson.overview} />
@@ -47,8 +49,13 @@ export function LessonPage() {
         <Button variant="outline" onClick={handlePrevious} disabled={tab === 0}>
           Previous
         </Button>
-
-        {tab === TOTAL_TABS - 1 ? (
+        {tab === 6 ? (
+          <div className="flex justify-end pt-8">
+            <Button onClick={() => router.push(`/quiz?lessonId=${lesson.id}`)}>
+              Practice with AI →
+            </Button>
+          </div>
+        ) : tab === TOTAL_TABS - 2 ? (
           <Button asChild>
             <Link
               href={`/courses/${lesson.courseId}/lessons/${lesson.id}/practice`}

@@ -7,7 +7,7 @@ import { DialogueCard } from "../dialogue/DialogueCard";
 import { ReadingCard } from "../reading/ReadingCard";
 import { ExerciseCard } from "../exercises/ExerciseCard";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 
 interface LessonBodyProps {
   lesson: LessonSchema;
@@ -15,7 +15,7 @@ interface LessonBodyProps {
   tab: number;
 }
 export function LessonBody({ lesson, tab }: LessonBodyProps) {
-  const router = useRouter();
+  const router = useTransitionRouter();
   switch (tab) {
     case 0:
       return (
@@ -23,7 +23,12 @@ export function LessonBody({ lesson, tab }: LessonBodyProps) {
       );
 
     case 1:
-      return <VocabularyCard vocabulary={lesson.vocabulary} />;
+      return (
+        <VocabularyCard
+          vocabulary={lesson.vocabulary}
+          language={lesson.languageCode}
+        />
+      );
 
     case 2:
       return <GrammarCard grammar={lesson.grammar} />;
@@ -36,8 +41,6 @@ export function LessonBody({ lesson, tab }: LessonBodyProps) {
 
     case 5:
       return <ExerciseCard exercises={lesson.exercises} />;
-    // case 6:
-    //   return router.push(`/quiz?lessonId=${lesson.id}`);
 
     default:
       return null;

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { ViewTransitions } from "next-view-transitions";
+
 import "./globals.css";
 
 import { MainLayout } from "@/components/layout/MainLayout";
@@ -27,7 +29,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body className="min-h-screen bg-background text-foreground">
-        <MainLayout>{children}</MainLayout>
+        <ViewTransitions>
+          <MainLayout>{children}</MainLayout>
+        </ViewTransitions>
       </body>
     </html>
   );

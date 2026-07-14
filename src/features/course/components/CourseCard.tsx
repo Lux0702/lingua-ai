@@ -1,10 +1,10 @@
-"use client"
+"use client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { Badge } from "@/components/ui/badge";
 
 import type { Course } from "../types";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import { LANGUAGES } from "../constants";
 
 interface CourseCardProps {

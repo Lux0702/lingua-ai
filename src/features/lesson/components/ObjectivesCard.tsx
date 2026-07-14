@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 
 interface ObjectivesCardProps {
   objectives: string[];
@@ -8,7 +8,7 @@ interface ObjectivesCardProps {
 }
 
 export function ObjectivesCard({ objectives, lessonId }: ObjectivesCardProps) {
-  const router = useRouter();
+  const router = useTransitionRouter();
   const lesson = { id: lessonId };
   return (
     <Card>

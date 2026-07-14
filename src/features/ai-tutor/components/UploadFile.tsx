@@ -8,7 +8,7 @@ import { saveLesson } from "@/features/lesson/services/storage";
 
 import type { GenerateLessonResponse } from "@/services/ai/types";
 import type { Language, Level } from "@/services/ai/contracts";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 
 interface UploadRequest {
   file: File;
@@ -18,7 +18,7 @@ interface UploadRequest {
 
 export  function UploadPage() {
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
+  const router = useTransitionRouter();
 
   const [lesson, setLesson] = useState<GenerateLessonResponse | null>(null);
 

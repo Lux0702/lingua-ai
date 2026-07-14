@@ -4,7 +4,7 @@ import { useParams } from "next/navigation";
 
 import { getCourse } from "../services/storage";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import type { LessonSchema } from "@/schemas/lesson";
 import type { Lesson } from "@/features/lesson/types";
 import { LANGUAGES } from "../constants";

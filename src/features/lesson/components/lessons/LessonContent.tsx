@@ -22,7 +22,7 @@ export function LessonContent({ lesson }: LessonContentProps) {
 
       <ObjectivesCard objectives={lesson.objectives} lessonId={lesson.id} />
 
-      <VocabularyCard vocabulary={lesson.vocabulary} />
+      <VocabularyCard vocabulary={lesson.vocabulary} language={lesson.languageCode} />
 
       <GrammarCard grammar={lesson.grammar} />
 

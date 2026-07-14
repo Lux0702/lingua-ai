@@ -121,10 +121,36 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+
   html {
     @apply font-sans;
   }
 }
+
+
+
+/* ::view-transition-old(root) {
+  animation: old-page 180ms ease;
+}
+
+::view-transition-new(root) {
+  animation: new-page 180ms ease;
+}
+
+@keyframes old-page {
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes new-page {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+} */

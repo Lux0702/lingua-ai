@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 
 import { LESSON_TABS } from "../../constants";
-
 interface LessonTabsProps {
   value: number;
 
@@ -11,6 +10,7 @@ interface LessonTabsProps {
 }
 
 export function LessonTabs({ value, onChange }: LessonTabsProps) {
+  
   return (
     <div className="flex flex-wrap gap-2">
       {LESSON_TABS.map((tab, index) => (

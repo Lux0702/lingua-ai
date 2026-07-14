@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 import { saveLesson } from "@/features/lesson/services/storage";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 import { LessonPreview } from "@/features/lesson";
 import { lessonSchema, type LessonSchema } from "@/schemas/lesson";
 export default function ImportPage() {
   const [json, setJson] = useState("");
   const [lesson, setLesson] = useState<LessonSchema | null>(null);
   const [error, setError] = useState("");
-  const router = useRouter();
+  const router = useTransitionRouter();
   function handlePreview() {
     try {
       const parsed = lessonSchema.parse(JSON.parse(json));

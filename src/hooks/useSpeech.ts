@@ -1,5 +1,12 @@
 import { useState } from "react";
 
+const languageMap = {
+  zh: "zh-CN",
+  ja: "ja-JP",
+  ko: "ko-KR",
+  en: "en-US",
+} as const;
+
 export function useSpeech(language: string) {
   const [speaking, setSpeaking] = useState(false);
 
@@ -10,24 +17,22 @@ export function useSpeech(language: string) {
 
     const utterance = new SpeechSynthesisUtterance(text);
 
-    switch (language) {
-      case "zh":
-        utterance.lang = "zh-CN";
-        break;
-      case "ja":
-        utterance.lang = "ja-JP";
-        break;
-      case "ko":
-        utterance.lang = "ko-KR";
-        break;
-      default:
-        utterance.lang = "en-US";
-    }
+    utterance.lang =
+      languageMap[language as keyof typeof languageMap] ?? "en-US";
 
     utterance.rate = 0.9;
 
-    utterance.onstart = () => setSpeaking(true);
-    utterance.onend = () => setSpeaking(false);
+    utterance.onstart = () => {
+      setSpeaking(true);
+    };
+
+    utterance.onend = () => {
+      setSpeaking(false);
+    };
+
+    utterance.onerror = () => {
+      setSpeaking(false);
+    };
 
     speechSynthesis.speak(utterance);
   }

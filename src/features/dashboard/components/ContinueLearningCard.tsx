@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 
 import type { LessonSchema } from "@/schemas/lesson";
 
@@ -24,7 +24,7 @@ export function ContinueLearningCard({ lesson }: ContinueLearningCardProps) {
       </Card>
     );
   }
-  console.log(lesson);  
+  console.log(lesson);
 
   return (
     <Card>
@@ -40,7 +40,9 @@ export function ContinueLearningCard({ lesson }: ContinueLearningCardProps) {
         </div>
 
         <Button className="w-full">
-          <Link href={`/courses/${lesson.courseId}/lessons/${lesson.id}`}>Continue</Link>
+          <Link href={`/courses/${lesson.courseId}/lessons/${lesson.id}`}>
+            Continue
+          </Link>
         </Button>
       </CardContent>
     </Card>
