@@ -13,7 +13,6 @@ export interface Vocabulary {
   example?: string;
 
   translation?: string;
-  language?: Language;
   notes?: string;
 }
 
