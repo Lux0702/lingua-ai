@@ -11,7 +11,7 @@ export interface Vocabulary {
   meaning: string;
 
   example?: string;
-
+  language: Language;
   translation?: string;
   notes?: string;
 }

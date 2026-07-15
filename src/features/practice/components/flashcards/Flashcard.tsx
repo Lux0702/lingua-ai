@@ -13,7 +13,7 @@ interface FlashcardProps {
 }
 
 export function Flashcard({ vocabulary, flipped, onFlip }: FlashcardProps) {
-  const { speak, speaking } = useSpeech(vocabulary.language ?? "zh");
+  const { speak, speaking } = useSpeech(vocabulary?.language ?? "zh");
   
 
   return (

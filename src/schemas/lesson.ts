@@ -9,6 +9,7 @@ export const vocabularySchema = z.object({
   example: z.string().optional(),
   translation: z.string().optional(),
   notes: z.string().optional(),
+  language: z.enum(["zh", "en", "ja", "ko"]).optional(),
 });
 
 export const grammarSchema = z.object({
