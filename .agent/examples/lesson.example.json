@@ -11,7 +11,8 @@
     {
       "id": "v1",
       "word": "你好",
-      "pinyin": "nǐ hǎo",
+      "pronunciation": "nǐ hǎo",
+      "romanization": "ni hao",
       "meaning": "Hello",
       "example": "你好，我叫小明。",
       "translation": "Hello, my name is Xiaoming."
@@ -42,8 +43,9 @@
     "paragraphs": [
       {
         "id": "r1",
-        "chinese": "你好，我叫小明。",
-        "pinyin": "Nǐ hǎo, wǒ jiào Xiǎomíng.",
+        "text": "你好，我叫小明。",
+        "pronunciation": "Nǐ hǎo, wǒ jiào Xiǎomíng.",
+        "romanization": "Ni hao, wo jiao Xiaoming.",
         "translation": "Hello, my name is Xiaoming."
       }
     ]

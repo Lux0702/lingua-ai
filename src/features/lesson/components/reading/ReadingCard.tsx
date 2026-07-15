@@ -6,9 +6,10 @@ import type { Reading } from "../../types";
 
 interface ReadingCardProps {
   reading: Reading;
+  language: string;
 }
 
-export function ReadingCard({ reading }: ReadingCardProps) {
+export function ReadingCard({ reading, language }: ReadingCardProps) {
   return (
     <Card>
       <CardHeader>
@@ -17,7 +18,7 @@ export function ReadingCard({ reading }: ReadingCardProps) {
 
       <CardContent className="space-y-4">
         {reading.paragraphs.map((paragraph) => (
-          <ReadingParagraphItem key={paragraph.id} paragraph={paragraph} />
+          <ReadingParagraphItem key={paragraph.id} paragraph={paragraph} language={language} />
         ))}
       </CardContent>
     </Card>

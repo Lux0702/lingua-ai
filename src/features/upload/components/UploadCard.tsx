@@ -107,11 +107,18 @@ export function UploadCard({ loading = false, onUpload }: UploadCardProps) {
         </div>
       </div>
 
-      <input type="file" accept=".pdf,.docx,.txt" onChange={handleFileChange} />
+      <div className="border-2 p-4 rounded-xl hover:scale-105 duration-300 transition-transform">
+        <input
+          type="file"
+          accept=".pdf,.docx,.txt"
+          onChange={handleFileChange}
+          className="cursor-pointer "
+        />
 
-      {file && (
-        <p className="text-sm text-muted-foreground">Selected: {file.name}</p>
-      )}
+        {file && (
+          <p className="text-sm text-muted-foreground">Selected: {file.name}</p>
+        )}
+      </div>
 
       <Button disabled={!file || loading} onClick={handleSubmit}>
         {loading ? "Generating..." : "Generate Lesson"}

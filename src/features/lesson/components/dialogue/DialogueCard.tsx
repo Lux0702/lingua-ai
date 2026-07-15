@@ -5,9 +5,10 @@ import type { Dialogue } from "../../types";
 
 interface DialogueCardProps {
   dialogue: Dialogue;
+  language: string;
 }
 
-export function DialogueCard({ dialogue }: DialogueCardProps) {
+export function DialogueCard({ dialogue, language }: DialogueCardProps) {
   return (
     <Card>
       <CardHeader>
@@ -16,7 +17,7 @@ export function DialogueCard({ dialogue }: DialogueCardProps) {
 
       <CardContent className="space-y-4">
         {dialogue.lines.map((line) => (
-          <DialogueItem key={line.id} line={line} />
+          <DialogueItem key={line.id} line={line} language={language} />
         ))}
       </CardContent>
     </Card>

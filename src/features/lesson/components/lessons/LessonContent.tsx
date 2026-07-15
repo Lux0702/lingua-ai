@@ -18,20 +18,22 @@ interface LessonContentProps {
 export function LessonContent({ lesson }: LessonContentProps) {
   return (
     <>
-      <LessonHeader title={lesson.title} overview={lesson.overview}  />
+      <LessonHeader title={lesson.title} overview={lesson.overview} />
 
       <ObjectivesCard objectives={lesson.objectives} lessonId={lesson.id} />
 
-      <VocabularyCard vocabulary={lesson.vocabulary} language={lesson.languageCode} />
+      <VocabularyCard
+        vocabulary={lesson.vocabulary}
+        language={lesson.languageCode}
+      />
 
       <GrammarCard grammar={lesson.grammar} />
 
-      <DialogueCard dialogue={lesson.dialogue} />
+      <DialogueCard dialogue={lesson.dialogue} language={lesson.languageCode} />
 
-      <ReadingCard reading={lesson.reading} />
+      <ReadingCard reading={lesson.reading} language={lesson.languageCode} />
 
       <ExerciseCard exercises={lesson.exercises} />
-      
     </>
   );
 }

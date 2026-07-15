@@ -26,7 +26,7 @@ export function DashboardPage() {
             <p className="text-muted-foreground">No lessons yet.</p>
 
             <Button asChild className="mt-4">
-              <Link href="/import">Import Lesson</Link>
+              <Link href="/ai-tutor">Import Lesson</Link>
             </Button>
           </CardContent>
         </Card>

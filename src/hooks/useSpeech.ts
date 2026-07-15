@@ -36,9 +36,14 @@ export function useSpeech(language: string) {
 
     speechSynthesis.speak(utterance);
   }
+  function stop() {
+    speechSynthesis.cancel();
+    setSpeaking(false);
+  }
 
   return {
     speak,
+    stop,
     speaking,
   };
 }

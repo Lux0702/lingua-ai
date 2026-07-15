@@ -127,8 +127,11 @@ string
 word
 string
 
-pinyin
-string
+pronunciation
+string (optional)
+
+romanization
+string (optional)
 
 meaning
 string
@@ -138,6 +141,9 @@ string
 
 translation
 string
+
+notes
+string (optional)
 
 --------------------------------
 
@@ -221,11 +227,14 @@ ReadingParagraph
 id
 string
 
-chinese
+text
 string
 
-pinyin
-string
+pronunciation
+string (optional)
+
+romanization
+string (optional)
 
 translation
 string
@@ -308,5 +317,20 @@ For `multiple_choice` exercises:
 For `fill_blank` exercises:
 
 - options must be [].
+
+--------------------------------
+
+# Pronunciation Rules
+
+- `text` is the original text in the target language.
+- `pronunciation` is the standard pronunciation for that language.
+  Examples:
+  - Chinese: Pinyin with tone marks.
+  - English: IPA.
+  - Japanese: Kana reading.
+  - Korean: Hangul reading or standard pronunciation.
+- `romanization` is the Latin transliteration.
+  - Use it only for languages that do **not** use the Latin alphabet (Chinese, Japanese, Korean, Thai, Arabic, Russian, etc.).
+  - Omit or use an empty string for languages that already use the Latin alphabet (English, French, Spanish, German, etc.).
 
 The returned JSON must be directly parsable by JSON.parse().

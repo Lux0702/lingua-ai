@@ -3,12 +3,13 @@ import { z } from "zod";
 export const vocabularySchema = z.object({
   id: z.string(),
   word: z.string(),
-  pinyin: z.string().optional(),
   pronunciation: z.string().optional(),
+  romanization: z.string().optional(),
   meaning: z.string(),
   example: z.string().optional(),
   translation: z.string().optional(),
   notes: z.string().optional(),
+  language: z.enum(["zh", "en", "ja", "ko"]),
 });
 
 export const grammarSchema = z.object({
@@ -33,8 +34,13 @@ export const dialogueSchema = z.object({
 
 export const readingParagraphSchema = z.object({
   id: z.string(),
-  chinese: z.string(),
-  pinyin: z.string().optional(),
+
+  text: z.string(),
+
+  pronunciation: z.string().optional(),
+
+  romanization: z.string().optional(),
+
   translation: z.string(),
 });
 

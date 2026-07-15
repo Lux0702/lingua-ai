@@ -38,7 +38,7 @@ export function Flashcard({ vocabulary, flipped, onFlip }: FlashcardProps) {
 
                 speak(vocabulary.word);
               }}
-               className="h-16 w-16 [&_svg]:size-12 cursor-pointer"
+              className="h-16 w-16 [&_svg]:size-12 cursor-pointer"
             >
               {speaking ? (
                 <Volume2
@@ -63,9 +63,14 @@ export function Flashcard({ vocabulary, flipped, onFlip }: FlashcardProps) {
           <div className="flex h-full flex-col justify-center space-y-6 p-8 text-center">
             <h1 className="text-4xl font-bold">{vocabulary.word}</h1>
 
-            {vocabulary.pinyin && (
+            {vocabulary.pronunciation && (
               <p className="text-xl text-muted-foreground">
-                {vocabulary.pinyin}
+                {vocabulary.pronunciation}
+              </p>
+            )}
+            {vocabulary.romanization && (
+              <p className="text-xl text-muted-foreground">
+                {vocabulary.romanization}
               </p>
             )}
 

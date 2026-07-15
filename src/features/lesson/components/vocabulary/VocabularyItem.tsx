@@ -4,15 +4,22 @@ import { Button } from "@/components/ui/button";
 
 interface VocabularyItemProps {
   word: string;
-  pinyin?: string;
+  pronunciation?: string;
+  romanization?: string;
   meaning: string;
   language: string;
 }
 import { useSpeech } from "@/hooks/useSpeech";
 import { Volume2, Volume1 } from "lucide-react";
 
-export function VocabularyItem({ word, pinyin, meaning, language }: VocabularyItemProps) {
-    const { speak, speaking } = useSpeech(language || "zh");
+export function VocabularyItem({
+  word,
+  pronunciation,
+  romanization,
+  meaning,
+  language,
+}: VocabularyItemProps) {
+  const { speak, speaking } = useSpeech(language || "zh");
 
   return (
     <Card>
@@ -21,8 +28,11 @@ export function VocabularyItem({ word, pinyin, meaning, language }: VocabularyIt
           <div className="space-y-1">
             <h3 className="text-xl font-semibold">{word}</h3>
 
-            {pinyin && (
-              <p className="text-sm text-muted-foreground">{pinyin}</p>
+            {pronunciation && (
+              <p className="text-sm text-muted-foreground">{pronunciation}</p>
+            )}
+            {romanization && (
+              <p className="text-sm text-muted-foreground">{romanization}</p>
             )}
           </div>
           <Button

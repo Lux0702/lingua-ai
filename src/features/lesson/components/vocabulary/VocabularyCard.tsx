@@ -21,7 +21,8 @@ export function VocabularyCard({ vocabulary, language }: VocabularyCardProps) {
           <VocabularyItem
             key={item.id}
             word={item.word}
-            pinyin={item.pinyin}
+            pronunciation={item.pronunciation}
+            romanization={item.romanization}
             meaning={item.meaning}
             language={language}
           />

@@ -1,14 +1,20 @@
 import { Language } from './../../services/ai/contracts';
 export interface Vocabulary {
   id: string;
+
   word: string;
-  pinyin?: string;
+
   pronunciation?: string;
+
+  romanization?: string;
+
   meaning: string;
+
   example?: string;
+
   translation?: string;
-  notes?: string;
   language?: Language;
+  notes?: string;
 }
 
 export interface Grammar {
@@ -61,8 +67,13 @@ export interface Dialogue {
 
 export interface ReadingParagraph {
   id: string;
-  chinese: string;
-  pinyin?: string;
+
+  text: string;
+
+  pronunciation?: string;
+
+  romanization?: string;
+
   translation: string;
 }
 

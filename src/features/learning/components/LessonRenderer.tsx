@@ -25,9 +25,9 @@ export function LessonRenderer({ lesson }: Props) {
 
       <GrammarCard grammar={lesson.grammar} />
 
-      <DialogueCard dialogue={lesson.dialogue} />
+      <DialogueCard dialogue={lesson.dialogue} language={lesson.languageCode} />
 
-      <ReadingCard reading={lesson.reading} />
+      <ReadingCard reading={lesson.reading} language={lesson.languageCode} />
     </div>
   );
 }

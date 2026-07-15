@@ -1,3 +1,4 @@
+"use client"
 import type { LessonSchema } from "@/schemas/lesson";
 
 import { ObjectivesCard } from "../ObjectivesCard";
@@ -7,7 +8,8 @@ import { DialogueCard } from "../dialogue/DialogueCard";
 import { ReadingCard } from "../reading/ReadingCard";
 import { ExerciseCard } from "../exercises/ExerciseCard";
 import { Button } from "@/components/ui/button";
-import { useTransitionRouter } from "next-view-transitions";
+import { useSpeech } from "@/hooks/useSpeech";
+import { useEffect } from "react";
 
 interface LessonBodyProps {
   lesson: LessonSchema;
@@ -15,7 +17,12 @@ interface LessonBodyProps {
   tab: number;
 }
 export function LessonBody({ lesson, tab }: LessonBodyProps) {
-  const router = useTransitionRouter();
+  const { stop } = useSpeech(lesson.languageCode || "zh");
+  useEffect(()=>{
+    return ()=>{
+      stop()
+    }
+  },[tab])
   switch (tab) {
     case 0:
       return (
@@ -34,10 +41,17 @@ export function LessonBody({ lesson, tab }: LessonBodyProps) {
       return <GrammarCard grammar={lesson.grammar} />;
 
     case 3:
-      return <DialogueCard dialogue={lesson.dialogue} />;
+      return (
+        <DialogueCard
+          dialogue={lesson.dialogue}
+          language={lesson.languageCode}
+        />
+      );
 
     case 4:
-      return <ReadingCard reading={lesson.reading} />;
+      return (
+        <ReadingCard reading={lesson.reading} language={lesson.languageCode} />
+      );
 
     case 5:
       return <ExerciseCard exercises={lesson.exercises} />;

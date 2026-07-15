@@ -3,18 +3,19 @@
     {
       "id": "v1",
       "word": "你好",
-      "pinyin": "nǐ hǎo",
+      "pronunciation": "nǐ hǎo",
+      "romanization": "ni hao",
       "meaning": "Hello",
-      "example": "你好！",
-      "translation": "Hello!"
+      "example": "你好！很高兴认识你。",
+      "translation": "Hello! Nice to meet you."
     },
     {
       "id": "v2",
-      "word": "谢谢",
-      "pinyin": "xiè xie",
-      "meaning": "Thank you",
-      "example": "谢谢你的帮助。",
-      "translation": "Thank you for your help."
+      "word": "Father",
+      "pronunciation": "/ˈfɑːðər/",
+      "meaning": "Cha",
+      "example": "My father is a doctor.",
+      "translation": "Bố tôi là bác sĩ."
     }
   ]
 }
