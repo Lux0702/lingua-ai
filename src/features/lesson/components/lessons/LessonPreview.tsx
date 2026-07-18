@@ -25,14 +25,14 @@ export function LessonPreview({ lessons, onSave, onBack, loading }: LessonPrevie
       <Tabs defaultValue={selected} onValueChange={setSelected}>
         <TabsList>
           {lessons.map((lesson) => (
-            <TabsTrigger key={lesson._id} value={lesson._id}>
+            <TabsTrigger key={lesson._id} value={lesson._id!}>
               Lesson {lesson.lessonNumber}
             </TabsTrigger>
           ))}
         </TabsList>
 
         {lessons.map((lesson) => (
-          <TabsContent key={lesson._id} value={lesson._id}>
+          <TabsContent key={lesson._id} value={lesson._id!}>
             <LessonContent lesson={lesson} />
           </TabsContent>
         ))}
