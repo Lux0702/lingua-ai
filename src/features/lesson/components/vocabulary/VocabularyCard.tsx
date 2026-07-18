@@ -23,8 +23,10 @@ export function VocabularyCard({ vocabulary, language }: VocabularyCardProps) {
       <CardHeader>
         <CardTitle className="flex justify-between">
           Vocabulary
-          <Button className="max-w-[200px] ">
-            <Link href={`/courses/${courseId}/lessons/${lessonId}/practice/flashcards`}>
+          <Button className="max-w-[200px] " disabled={courseId === undefined || lessonId === undefined}>
+            <Link
+              href={`/courses/${courseId}/lessons/${lessonId}/practice/flashcards`}
+            >
               FlashCards 🎉
             </Link>
           </Button>

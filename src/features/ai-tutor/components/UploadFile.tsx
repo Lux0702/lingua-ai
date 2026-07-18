@@ -17,11 +17,10 @@ interface UploadRequest {
 }
 
 export function UploadPage() {
-  const { mutateAsync: createLessons, isPending } = useCreateLessons();
-
   const [loading, setLoading] = useState(false);
   const router = useTransitionRouter();
   const [courseId, setCourseId] = useState("");
+  const { mutateAsync: createLessons, isPending } = useCreateLessons();
 
   const [lesson, setLesson] = useState<GenerateLessonResponse | null>(null);
 
@@ -72,13 +71,12 @@ export function UploadPage() {
 
   async function handleSave() {
     if (!lesson) return;
-    const payload = lesson.lesson.map(({ _id,...lesson }) => ({
+    const payload = lesson.lesson.map(({ _id, courseId: _, ...lesson }) => ({
       ...lesson,
       ...(courseId ? { courseId: courseId } : {}),
     }));
-    await createLessons(payload).then(() => {
-      router.push("/");
-    });
+    await createLessons(payload);
+    router.push("/");
 
     // console.log("Save lesson", lesson.lesson);
   }
@@ -97,7 +95,13 @@ export function UploadPage() {
         </div>
       )}
 
-      {lesson && <LessonPreview lessons={lesson.lesson} onSave={handleSave} loading={isPending} />}
+      {lesson && (
+        <LessonPreview
+          lessons={lesson.lesson}
+          onSave={handleSave}
+          loading={isPending}
+        />
+      )}
     </main>
   );
 }

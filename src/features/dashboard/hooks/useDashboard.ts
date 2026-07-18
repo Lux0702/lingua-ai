@@ -2,11 +2,11 @@
 
 import { use, useEffect, useMemo, useState } from "react";
 
-import { getCourses } from "@/lib/api/course.api";
-import { getLessonsByCourseId } from "@/lib/api/lesson.api";
+// import { getCourses } from "@/lib/api/course.api";
+// import { getLessonsByCourseId } from "@/lib/api/lesson.api";
 
 import type { Lesson } from "@/features/lesson/types";
-import type { Course } from "@/features/course/types";
+// import type { Course } from "@/features/course/types";
 import { useCourses } from "@/hooks/useCourses";
 import { useLessonsByCourseId } from "@/hooks/useLessons";
 
@@ -16,9 +16,7 @@ export function useDashboard() {
     courses?.[0]?._id ?? "",
   );
 
-  const loading = coursesLoading || lessonsLoading;
-
-
+  const loading = coursesLoading || ( lessonsLoading);
 
   const stats = useMemo(
     () => [

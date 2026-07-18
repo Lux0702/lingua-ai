@@ -33,7 +33,11 @@ export function useCreateLessons() {
 
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["courses","lessons"],
+        queryKey: ["courses"],
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: ["lessonsByCourse"],
       });
     },
   });

@@ -3,7 +3,11 @@
 import { useState } from "react";
 import { useTransitionRouter } from "next-view-transitions";
 import { LessonPreview } from "@/features/lesson";
-import { lessonSchema, lessonsSchema ,type LessonSchema } from "@/schemas/lesson";
+import {
+  lessonSchema,
+  lessonsSchema,
+  type LessonSchema,
+} from "@/schemas/lesson";
 import { useCourses } from "@/hooks/useCourses";
 import {
   Select,
@@ -37,13 +41,18 @@ export function ImportPage() {
 
   async function handleSave() {
     if (!lesson) return;
-    const payload = lesson.map(({ _id, ...lesson }) => ({
-      ...lesson,
-      ...(courseId ? { courseId: courseId } : {}),
-    }));
-    await createLessons(payload).then(() => {
-      router.push("/");
+    const payload = lesson.map(({ _id, courseId: _, ...lesson }) => {
+      return {
+        ...lesson,
+        ...(courseId ? { courseId: courseId } : {}),
+      };
     });
+    // console.log("🚀 ~ handleSave ~ courseId:", courseId);
+
+    // console.log("🚀 ~ handleSave ~ payload:", payload);
+
+    await createLessons(payload);
+    router.push("/");
 
     // console.log("Save lesson", lesson.lesson);
   }
