@@ -12,7 +12,7 @@ import type {
 import { buildLessonPrompt } from "./prompt-builder";
 import { buildQuizPrompt } from "./buildQuizPrompt";
 import { parseJson } from "./parser";
-import type { LessonSchema } from "@/schemas/lesson";
+import type { LessonsSchema } from "@/schemas/lesson";
 import { ai } from "./google";
 
 async function generateContent(prompt: string) {
@@ -42,7 +42,7 @@ export const googleStudioAgent: AgentService = {
     const response = await generateContent(prompt);
     console.log("===== RAW GEMINI =====");
     console.log(response.text);
-    const lesson = parseJson<LessonSchema>(response.text || "");
+    const lesson = parseJson<LessonsSchema>(response.text || "");
 
     return {
       lesson,
