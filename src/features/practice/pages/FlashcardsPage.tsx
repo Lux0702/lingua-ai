@@ -10,18 +10,19 @@ import { FlashcardEmpty } from "../components/flashcards/FlashcardEmpty";
 import { FlashcardProgress } from "../components/flashcards/FlashcardProgress";
 
 import { useFlashcards } from "../hooks/useFlashcards";
-import { useEffect } from "react";
+import {  useEffect } from "react";
 import { FlashcardFinished } from "../components/flashcards/FlashcardFinished";
 import { useState } from "react";
-import { getLessonProgress, saveLessonProgress } from "@/features/progress/services/storage";
-
+// import { getLessonProgress, saveLessonProgress } from "@/features/progress/services/storage";
+import { useLesson } from "@/hooks/useLessons";
 export function FlashcardsPage() {
   const [finished, setFinished] = useState(false);
   const { lessonId } = useParams<{
     lessonId: string;
   }>();
 
-  const lesson = getLesson(lessonId);
+  const {data: lesson} = useLesson(lessonId)
+
 
   const flashcards = useFlashcards(lesson?.vocabulary ?? []);
 
@@ -52,25 +53,25 @@ useEffect(() => {
   };
 }, [flashcards.flip, flashcards.next, flashcards.previous]);
 
-useEffect(() => {
-  if (!finished || !lesson) return;
+// useEffect(() => {
+//   if (!finished || !lesson) return;
 
-  const old = getLessonProgress(lesson._id);
+//   const old = getLessonProgress(lesson._id);
 
-  saveLessonProgress({
-    lessonId: lesson._id,
+//   saveLessonProgress({
+//     lessonId: lesson._id,
 
-    flashcardsCompleted: true,
+//     flashcardsCompleted: true,
 
-    quizCompleted: old?.quizCompleted ?? false,
+//     quizCompleted: old?.quizCompleted ?? false,
 
-    quizScore: old?.quizScore ?? 0,
+//     quizScore: old?.quizScore ?? 0,
 
-    completed: old?.quizCompleted ?? false,
+//     completed: old?.quizCompleted ?? false,
 
-    lastStudiedAt: new Date().toISOString(),
-  });
-}, [finished, lesson]);
+//     lastStudiedAt: new Date().toISOString(),
+//   });
+// }, [finished, lesson]);
   if (!lesson) {
     return <p>Lesson not found.</p>;
   }
@@ -81,7 +82,7 @@ useEffect(() => {
   if (finished) {
     return (
       <FlashcardFinished
-        courseId={lesson.courseId}
+        courseId={lesson.courseId!}
         lessonId={lesson._id}
         onRestart={() => {
           flashcards.restart();

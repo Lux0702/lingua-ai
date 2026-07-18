@@ -12,44 +12,47 @@ import { Button } from "@/components/ui/button";
 import { Link } from "next-view-transitions";
 
 export function DashboardPage() {
-  const { stats, recentLessons, continueLesson, recentCourses } =
+  const { stats, recentLessons, continueLesson, recentCourses, loading } =
     useDashboard();
 
   // 👇 Đặt ở đây
-  if (recentLessons.length === 0) {
+   if (loading) {
+     return <div>Loading...</div>;
+   } else if (recentLessons.length === 0) {
+     return (
+       <div className="space-y-8">
+         <WelcomeCard />
+
+         <Card>
+           <CardContent className="flex flex-col items-center justify-center py-12">
+             <p className="text-muted-foreground">No lessons yet.</p>
+
+             <Button asChild className="mt-4">
+               <Link href="/ai-tutor">Import Lesson</Link>
+             </Button>
+           </CardContent>
+         </Card>
+       </div>
+     );
+   }
+ 
+  
     return (
       <div className="space-y-8">
         <WelcomeCard />
 
-        <Card>
-          <CardContent className="flex flex-col items-center justify-center py-12">
-            <p className="text-muted-foreground">No lessons yet.</p>
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          {stats.map((stat) => (
+            <StatCard key={stat.id} stat={stat} />
+          ))}
+        </div>
 
-            <Button asChild className="mt-4">
-              <Link href="/ai-tutor">Import Lesson</Link>
-            </Button>
-          </CardContent>
-        </Card>
+        <div className="grid gap-6 lg:grid-cols-2">
+          <ContinueLearningCard lesson={continueLesson} />
+          <RecentCoursesCard courses={recentCourses} />
+        </div>
+
+        <RecentLessonsCard lessons={recentLessons} />
       </div>
     );
-  }
-
-  return (
-    <div className="space-y-8">
-      <WelcomeCard />
-
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        {stats.map((stat) => (
-          <StatCard key={stat.id} stat={stat} />
-        ))}
-      </div>
-
-      <div className="grid gap-6 lg:grid-cols-2">
-        <ContinueLearningCard lesson={continueLesson} />
-        <RecentCoursesCard courses={recentCourses} />
-      </div>
-
-      <RecentLessonsCard lessons={recentLessons} />
-    </div>
-  );
 }
