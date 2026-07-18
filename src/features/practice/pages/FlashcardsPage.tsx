@@ -2,7 +2,6 @@
 
 import { useParams } from "next/navigation";
 
-import { getLesson } from "@/features/lesson/services/storage";
 
 import { Flashcard } from "../components/flashcards/Flashcard";
 import { FlashcardControls } from "../components/flashcards/FlashcardControls";
@@ -13,7 +12,6 @@ import { useFlashcards } from "../hooks/useFlashcards";
 import {  useEffect } from "react";
 import { FlashcardFinished } from "../components/flashcards/FlashcardFinished";
 import { useState } from "react";
-// import { getLessonProgress, saveLessonProgress } from "@/features/progress/services/storage";
 import { useLesson } from "@/hooks/useLessons";
 export function FlashcardsPage() {
   const [finished, setFinished] = useState(false);

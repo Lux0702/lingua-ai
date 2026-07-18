@@ -11,10 +11,10 @@ import { QuizProgress } from "./QuizProgress";
 import { QuizResult } from "./QuizResult";
 import { QuizEmpty } from "./QuizEmpty";
 
-import {
-  getLessonProgress,
-  saveLessonProgress,
-} from "@/features/progress/services/storage";
+// import {
+//   getLessonProgress,
+//   saveLessonProgress,
+// } from "@/features/progress/services/storage";
 
 import type { Exercise } from "@/features/lesson/types";
 
@@ -49,21 +49,21 @@ export function QuizPlayer({
 
     if (!saveProgress || !lessonId) return;
 
-    const old = getLessonProgress(lessonId);
+    // const old = getLessonProgress(lessonId);
 
-    saveLessonProgress({
-      lessonId,
+    // saveLessonProgress({
+    //   lessonId,
 
-      flashcardsCompleted: old?.flashcardsCompleted ?? false,
+    //   flashcardsCompleted: old?.flashcardsCompleted ?? false,
 
-      quizCompleted: true,
+    //   quizCompleted: true,
 
-      quizScore: quiz.score,
+    //   quizScore: quiz.score,
 
-      completed: old?.flashcardsCompleted ?? false,
+    //   completed: old?.flashcardsCompleted ?? false,
 
-      lastStudiedAt: new Date().toISOString(),
-    });
+    //   lastStudiedAt: new Date().toISOString(),
+    // });
   }, [quiz.finished]);
 
   if (exercises.length === 0) {

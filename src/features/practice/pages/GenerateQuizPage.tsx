@@ -5,7 +5,6 @@ import { useParams } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 
-// import { getLesson } from "@/features/lesson/services/storage";
 import { QuizPlayer } from "@/features/practice/components/quiz/QuizPlayer";
 import { useLesson } from "@/hooks/useLessons";
 

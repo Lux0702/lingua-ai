@@ -1,6 +1,11 @@
 import { LessonsSchema } from "@/schemas/lesson";
 import { api } from "./axios";
 import type { Lesson } from "@/features/lesson/types";
+
+export async function getLessons(): Promise<Lesson[]> {
+  const { data } = await api.get<Lesson[]>(`/lessons`);
+  return data;
+}
 export async function getLessonById(lessonId: string): Promise<Lesson> {
   const { data } = await api.get<Lesson>(`/lessons/${lessonId}`);
   return data;

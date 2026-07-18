@@ -4,7 +4,6 @@ import { useState } from "react";
 
 import { LessonPreview } from "@/features/lesson";
 import { UploadCard } from "@/features/upload";
-import { saveLesson } from "@/features/lesson/services/storage";
 
 import type { GenerateLessonResponse } from "@/services/ai/types";
 import type { Language, Level } from "@/services/ai/contracts";

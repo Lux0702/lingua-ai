@@ -1,16 +1,16 @@
-import { getLessons } from "@/features/lesson/services/storage";
 
-export function getDashboardData() {
-  const lessons = getLessons();
+import type { Lesson } from "@/features/lesson/types";
 
-  const totalLessons = lessons.length;
+export function getDashboardData(lessons: Lesson[]) {
 
-  const totalVocabulary = lessons.reduce(
+  const totalLessons = lessons?.length ?? 0;
+
+  const totalVocabulary = lessons?.reduce(
     (sum, lesson) => sum + lesson.vocabulary.length,
     0,
   );
 
-  const totalGrammar = lessons.reduce(
+  const totalGrammar = lessons?.reduce(
     (sum, lesson) => sum + lesson.grammar.length,
     0,
   );
