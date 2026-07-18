@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 
-import type { LessonSchema } from "@/schemas/lesson";
+import type { LessonsSchema } from "@/schemas/lesson";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { LessonContent } from "./LessonContent";
 
 interface LessonPreviewProps {
-  lessons: LessonSchema[];
+  lessons: LessonsSchema;
 
   onSave?(): void;
 
