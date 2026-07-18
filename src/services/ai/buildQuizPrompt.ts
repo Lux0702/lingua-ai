@@ -1,5 +1,5 @@
-import { getLesson } from "@/features/lesson/services/storage";
-
+// import { getLesson } from "@/features/lesson/services/storage";
+// import { useLessons } from "@/hooks/useLessons";
 import type { GenerateQuizRequest } from "./types";
 
 export function buildQuizPrompt({
