@@ -4,9 +4,9 @@ import { navigation } from "@/lib/navigation";
 export function Sidebar() {
   return (
     <aside className="w-64 border-r bg-background ">
-      <div className="p-6">
+      {/* <div className="p-6">
         <h2 className="text-xl font-bold">Polyglot AI</h2>
-      </div>
+      </div> */}
 
       <nav className="px-3">
         <ul className="space-y-1">
