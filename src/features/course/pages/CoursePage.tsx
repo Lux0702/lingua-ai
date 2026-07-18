@@ -3,15 +3,14 @@
 import { useEffect, useState } from "react";
 
 import { CourseCard } from "../components/CourseCard";
-import { getCourses } from "../services/storage";
-import type { Course } from "../types";
 
+import { useCourses } from "@/hooks/useCourses";
 export function CoursePage() {
-  const [courses, setCourses] = useState<Course[]>([]);
-
-  useEffect(() => {
-    setCourses(getCourses());
-  }, []);
+  const { data: courses = [], isLoading, error } = useCourses();
+     if (isLoading) {
+       return <p>Loading...</p>;
+     }
+      
 
   return (
     <div className="space-y-6">
@@ -34,7 +33,7 @@ export function CoursePage() {
       ) : (
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {courses.map((course) => (
-            <CourseCard key={course.id} course={course} />
+            <CourseCard key={course._id} course={course} />
           ))}
         </div>
       )}

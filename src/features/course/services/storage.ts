@@ -24,5 +24,5 @@ export function getCourses(): Course[] {
   return Array.from(map.values());
 }
 export function getCourse(id: string) {
-  return getCourses().find((course) => course.id === id);
+  return getCourses().find((course) => course._id === id);
 }

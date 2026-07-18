@@ -65,10 +65,10 @@ export const exerciseSchema = z.object({
 import type { LanguageCode } from "@/features/course/constants";
 
 export const lessonSchema = z.object({
-  id: z.string(),
+  _id: z.string().optional(),
 
   languageCode: z.enum(["zh", "en", "ja", "ko"]),
-  courseId: z.string(),
+  courseId: z.string().optional(),
 
   courseTitle: z.string(),
 
@@ -90,5 +90,6 @@ export const lessonSchema = z.object({
 
   exercises: z.array(exerciseSchema),
 });
-
+export const lessonsSchema = z.array(lessonSchema);
 export type LessonSchema = z.infer<typeof lessonSchema>;
+export type LessonsSchema = z.infer<typeof lessonsSchema>;

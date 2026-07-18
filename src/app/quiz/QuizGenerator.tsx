@@ -1,8 +1,6 @@
 "use client";
 
-import { useState } from "react";
-
-import { getLessons } from "@/features/lesson/services/storage";
+import { useState, useEffect } from "react";
 
 import { QuizPlayer } from "@/features/practice/components/quiz/QuizPlayer";
 
@@ -12,8 +10,6 @@ import { Button } from "@/components/ui/button";
 
 import { Input } from "@/components/ui/input";
 
-import { Label } from "@/components/ui/label";
-
 import {
   Select,
   SelectContent,
@@ -22,35 +18,26 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import type { GenerateQuizResponse } from "@/services/ai/types";
-import { getCourses } from "@/features/course/services/storage";
+import { useCourses } from "@/hooks/useCourses";
+import { useLessonsByCourseId } from "@/hooks/useLessons";
 import { useSearchParams } from "next/navigation";
 
-export  function QuizGeneratorPage() {
+export function QuizGeneratorPage() {
   const searchParams = useSearchParams();
 
-  const initialLessonId = searchParams.get("lessonId");
-  const lessons = getLessons();
-  const courses = getCourses();
+  const initialLessonId = searchParams.get("lessonId") ?? "";
+  const initialCourseId = searchParams.get("courseId") ?? "";
 
-  const [courseId, setCourseId] = useState(() => {
-    if (initialLessonId) {
-      return lessons.find((l) => l.id === initialLessonId)?.courseId ?? "";
-    }
+  const [courseId, setCourseId] = useState(initialCourseId);
+  const [lessonId, setLessonId] = useState(initialLessonId);
 
-    return courses[0]?.id ?? "";
-  });
+  const { data: courses = [] } = useCourses();
 
-  const filteredLessons = lessons.filter(
-    (lesson) => lesson.courseId === courseId,
-  );
+  const { data: lessons = [] } = useLessonsByCourseId(courseId);
 
-  const [lessonId, setLessonId] = useState(() => {
-    if (initialLessonId) {
-      return initialLessonId;
-    }
-
-    return filteredLessons[0]?.id ?? "";
-  });
+  // const filteredLessons = lessons.filter(
+  //   (lesson) => lesson.courseId === courseId,
+  // );
 
   const [difficulty, setDifficulty] = useState("medium");
 
@@ -65,10 +52,10 @@ export  function QuizGeneratorPage() {
 
     const firstLesson = lessons.find((lesson) => lesson.courseId === id);
 
-    setLessonId(firstLesson?.id ?? "");
+    setLessonId(firstLesson?._id ?? "");
   }
   async function handleGenerate() {
-    const lesson = lessons.find((lesson) => lesson.id === lessonId);
+    const lesson = lessons.find((lesson) => lesson._id === lessonId);
 
     if (!lesson) return;
 
@@ -137,13 +124,13 @@ export  function QuizGeneratorPage() {
 
         <CardContent>
           <Select value={courseId} onValueChange={handleCourseChange}>
-            <SelectTrigger>
+            <SelectTrigger className="min-w-[300px]">
               <SelectValue placeholder="Select course" />
             </SelectTrigger>
 
             <SelectContent position="popper" align="start">
               {courses.map((course) => (
-                <SelectItem key={course.id} value={course.id}>
+                <SelectItem key={course._id} value={course._id}>
                   {course.title}
                 </SelectItem>
               ))}
@@ -158,14 +145,18 @@ export  function QuizGeneratorPage() {
         </CardHeader>
 
         <CardContent>
-          <Select value={lessonId} onValueChange={setLessonId}>
-            <SelectTrigger>
+          <Select
+            value={lessonId}
+            onValueChange={setLessonId}
+            disabled={courseId === ""}
+          >
+            <SelectTrigger className="min-w-[300px]">
               <SelectValue placeholder="Select lesson" />
             </SelectTrigger>
 
             <SelectContent position="popper" align="start">
-              {filteredLessons.map((lesson) => (
-                <SelectItem key={lesson.id} value={lesson.id}>
+              {lessons.map((lesson) => (
+                <SelectItem key={lesson._id} value={lesson._id}>
                   {lesson.title}
                 </SelectItem>
               ))}

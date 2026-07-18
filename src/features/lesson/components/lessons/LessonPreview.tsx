@@ -1,37 +1,52 @@
+"use client";
+
+import { useState } from "react";
+
 import type { LessonSchema } from "@/schemas/lesson";
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import { LessonHeader } from "./LessonHeader";
-import { ObjectivesCard } from "../ObjectivesCard";
-import { VocabularyCard } from "../vocabulary/VocabularyCard";
-import { GrammarCard } from "../grammar/GrammarCard";
-import { DialogueCard } from "../dialogue/DialogueCard";
-import { ReadingCard } from "../reading/ReadingCard";
-import { ExerciseCard } from "../exercises/ExerciseCard";
 import { LessonContent } from "./LessonContent";
 
 interface LessonPreviewProps {
-  lesson: LessonSchema;
+  lessons: LessonSchema[];
 
   onSave?(): void;
 
   onBack?(): void;
+  loading?: boolean;
 }
 
-export function LessonPreview({ lesson, onSave, onBack }: LessonPreviewProps) {
+export function LessonPreview({ lessons, onSave, onBack, loading }: LessonPreviewProps) {
+  const [selected, setSelected] = useState(lessons[0]._id ?? "");
+  
   return (
-    <div className="space-y-6">
-      <LessonContent lesson={lesson} />
+    <>
+      <Tabs defaultValue={selected} onValueChange={setSelected}>
+        <TabsList>
+          {lessons.map((lesson) => (
+            <TabsTrigger key={lesson._id} value={lesson._id}>
+              Lesson {lesson.lessonNumber}
+            </TabsTrigger>
+          ))}
+        </TabsList>
 
-      <div className="flex justify-end gap-3">
-        {onBack && (
-          <Button variant="outline" onClick={onBack}>
-            Back
+        {lessons.map((lesson) => (
+          <TabsContent key={lesson._id} value={lesson._id}>
+            <LessonContent lesson={lesson} />
+          </TabsContent>
+        ))}
+      </Tabs>
+
+      <div className="mt-6 flex justify-end gap-2">
+        <Button variant="outline" onClick={onBack}>
+          Back
+        </Button>
+
+        <Button onClick={onSave}>
+          {loading ? "Saving..." : "Save"}
           </Button>
-        )}
-
-        {onSave && <Button onClick={onSave}>Save Lesson</Button>}
       </div>
-    </div>
+    </>
   );
 }

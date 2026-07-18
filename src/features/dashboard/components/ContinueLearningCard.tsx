@@ -40,7 +40,7 @@ export function ContinueLearningCard({ lesson }: ContinueLearningCardProps) {
         </div>
 
         <Button className="w-full">
-          <Link href={`/courses/${lesson.courseId}/lessons/${lesson.id}`}>
+          <Link href={`/courses/${lesson.courseId}/lessons/${lesson._id}`}>
             Continue
           </Link>
         </Button>

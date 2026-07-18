@@ -5,8 +5,9 @@ import { useParams } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 
-import { getLesson } from "@/features/lesson/services/storage";
+// import { getLesson } from "@/features/lesson/services/storage";
 import { QuizPlayer } from "@/features/practice/components/quiz/QuizPlayer";
+import { useLesson } from "@/hooks/useLessons";
 
 import type { GenerateQuizResponse } from "@/services/ai/types";
 
@@ -15,7 +16,8 @@ export function GenerateQuizPage() {
     lessonId: string;
   }>();
 
-  const lesson = getLesson(lessonId);
+  const {data:lesson} = useLesson(lessonId)
+
 
   const [loading, setLoading] = useState(false);
 

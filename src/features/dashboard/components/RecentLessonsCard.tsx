@@ -17,9 +17,9 @@ export function RecentLessonsCard({ lessons }: RecentLessonsCardProps) {
       <CardContent>
         <ul className="space-y-4">
           {lessons.map((lesson) => (
-            <li key={lesson.id}>
+            <li key={lesson._id}>
               <Link
-                href={`/courses/${lesson.courseId}/lessons/${lesson.id}`}
+                href={`/courses/${lesson.courseId}/lessons/${lesson._id}`}
                 className="block rounded-lg border p-4 transition hover:bg-muted"
               >
                 <h3 className="font-medium">{lesson.title}</h3>

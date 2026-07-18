@@ -4,11 +4,11 @@ import { useState } from "react";
 
 import { LessonPreview } from "@/features/lesson";
 import { UploadCard } from "@/features/upload";
-import { saveLesson } from "@/features/lesson/services/storage";
 
 import type { GenerateLessonResponse } from "@/services/ai/types";
 import type { Language, Level } from "@/services/ai/contracts";
 import { useTransitionRouter } from "next-view-transitions";
+import { useCreateLessons } from "@/hooks/useLessons";
 
 interface UploadRequest {
   file: File;
@@ -16,9 +16,12 @@ interface UploadRequest {
   level: Level;
 }
 
-export  function UploadPage() {
+export function UploadPage() {
+  const { mutateAsync: createLessons, isPending } = useCreateLessons();
+
   const [loading, setLoading] = useState(false);
   const router = useTransitionRouter();
+  const [courseId, setCourseId] = useState("");
 
   const [lesson, setLesson] = useState<GenerateLessonResponse | null>(null);
 
@@ -48,7 +51,8 @@ export  function UploadPage() {
 
       // Nếu API lỗi
       if (!response.ok) {
-        throw new Error(raw);
+        console.error("API error:", response?.status, response);
+        throw new Error(`HTTP ${response.status}\n${raw}`);
       }
 
       // Parse JSON
@@ -66,18 +70,26 @@ export  function UploadPage() {
     }
   }
 
-  function handleSave() {
+  async function handleSave() {
     if (!lesson) return;
+    const payload = lesson.lesson.map(({ _id,...lesson }) => ({
+      ...lesson,
+      ...(courseId ? { courseId: courseId } : {}),
+    }));
+    await createLessons(payload).then(() => {
+      router.push("/");
+    });
 
-    saveLesson(lesson.lesson);
-    router.push("/");
-
-    console.log("Save lesson", lesson.lesson);
+    // console.log("Save lesson", lesson.lesson);
   }
 
   return (
     <main className="mx-auto max-w-4xl space-y-8 p-8">
-      <UploadCard loading={loading} onUpload={handleUpload} />
+      <UploadCard
+        loading={loading}
+        onUpload={handleUpload}
+        onCourseChange={setCourseId}
+      />
 
       {loading && (
         <div className="rounded-lg border p-6 text-center">
@@ -85,7 +97,7 @@ export  function UploadPage() {
         </div>
       )}
 
-      {lesson && <LessonPreview lesson={lesson.lesson} onSave={handleSave} />}
+      {lesson && <LessonPreview lessons={lesson.lesson} onSave={handleSave} loading={isPending} />}
     </main>
   );
 }

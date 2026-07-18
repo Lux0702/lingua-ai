@@ -8,6 +8,7 @@ Read these documents before generating any response:
 4. PROMPTS.md
 5. examples/
 
+
 Always follow OUTPUT_RULES.
 
 Always follow JSON_SCHEMA.

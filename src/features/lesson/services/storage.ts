@@ -17,7 +17,7 @@ export function getLessons(): LessonSchema[] {
 }
 
 export function getLesson(id: string): LessonSchema | undefined {
-  return getLessons().find((lesson) => lesson.id === id);
+  return getLessons().find((lesson) => lesson._id === id);
 }
 
 export function saveLesson(lesson: LessonSchema) {
@@ -37,7 +37,7 @@ export function deleteLesson(id: string) {
     return;
   }
 
-  const lessons = getLessons().filter((lesson) => lesson.id !== id);
+  const lessons = getLessons().filter((lesson) => lesson._id !== id);
 
   localStorage.setItem(STORAGE_KEY, JSON.stringify(lessons));
 }
@@ -48,7 +48,7 @@ export function updateLesson(lesson: LessonSchema) {
   }
 
   const lessons = getLessons().map((item) =>
-    item.id === lesson.id ? lesson : item,
+    item.id === lesson._id ? lesson : item,
   );
 
   localStorage.setItem(STORAGE_KEY, JSON.stringify(lessons));

@@ -55,10 +55,10 @@ useEffect(() => {
 useEffect(() => {
   if (!finished || !lesson) return;
 
-  const old = getLessonProgress(lesson.id);
+  const old = getLessonProgress(lesson._id);
 
   saveLessonProgress({
-    lessonId: lesson.id,
+    lessonId: lesson._id,
 
     flashcardsCompleted: true,
 
@@ -82,7 +82,7 @@ useEffect(() => {
     return (
       <FlashcardFinished
         courseId={lesson.courseId}
-        lessonId={lesson.id}
+        lessonId={lesson._id}
         onRestart={() => {
           flashcards.restart();
           setFinished(false);

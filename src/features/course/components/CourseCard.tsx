@@ -13,7 +13,7 @@ interface CourseCardProps {
 
 export function CourseCard({ course }: CourseCardProps) {
   return (
-    <Link href={`/courses/${course.id}`}>
+    <Link href={`/courses/${course._id}`}>
       <Card className="h-full cursor-pointer transition-all hover:shadow-md hover:border-primary">
         <CardHeader>
           <div className="flex items-center justify-between">
@@ -25,10 +25,10 @@ export function CourseCard({ course }: CourseCardProps) {
 
         <CardContent className="space-y-3">
           <p className="text-sm text-muted-foreground">
-            {course.lessons.length} Lessons
+            {course.lessonCount} Lessons
           </p>
           <p className="text-sm">
-            Start with Lesson {course.lessons[0]?.lessonNumber}
+            Start with Lesson this course
           </p>
         </CardContent>
       </Card>

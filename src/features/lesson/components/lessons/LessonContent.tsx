@@ -20,7 +20,7 @@ export function LessonContent({ lesson }: LessonContentProps) {
     <>
       <LessonHeader title={lesson.title} overview={lesson.overview} />
 
-      <ObjectivesCard objectives={lesson.objectives} lessonId={lesson.id} />
+      <ObjectivesCard objectives={lesson.objectives} lessonId={lesson._id} />
 
       <VocabularyCard
         vocabulary={lesson.vocabulary}

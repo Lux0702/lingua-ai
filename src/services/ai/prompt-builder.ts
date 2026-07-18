@@ -86,14 +86,22 @@ ${content}
 
 ------------------------------------------------
 
-Generate ONE lesson.
+Analyze the uploaded learning material.
 
-Follow the JSON schema exactly.
+Identify every distinct lesson contained in the material.
 
-Use the example only as a structural reference.
+Generate exactly one Lesson object for each identified lesson.
 
-Do not copy the example content.
+Return ONLY a valid JSON array.
 
-Return ONLY valid JSON.
+Rules:
+
+- If the material contains one lesson, return an array with exactly one element.
+- If the material contains multiple lessons, return one Lesson object for each lesson.
+- Preserve the original lesson order.
+- Do not merge multiple lessons into one.
+- Do not split one lesson into multiple lessons.
+- Every array element must strictly follow the Lesson schema.
+- Do not wrap the array inside another object.
 `;
 }

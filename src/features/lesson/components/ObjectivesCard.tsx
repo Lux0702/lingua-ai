@@ -9,7 +9,7 @@ interface ObjectivesCardProps {
 
 export function ObjectivesCard({ objectives, lessonId }: ObjectivesCardProps) {
   const router = useTransitionRouter();
-  const lesson = { id: lessonId };
+  const lesson = { _id: lessonId };
   return (
     <Card>
       <CardHeader>
@@ -18,13 +18,13 @@ export function ObjectivesCard({ objectives, lessonId }: ObjectivesCardProps) {
 
       <CardContent>
         <ul className="list-disc space-y-2 pl-5">
-          {objectives.map((objective) => (
+          {objectives?.map((objective) => (
             <li key={objective}>{objective}</li>
           ))}
         </ul>
         <Button
           variant="secondary"
-          onClick={() => router.push(`/quiz?lessonId=${lesson.id}`)}
+          onClick={() => router.push(`/quiz?lessonId=${lesson._id}`)}
         >
           🤖 Generate AI Quiz
         </Button>

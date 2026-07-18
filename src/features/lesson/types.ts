@@ -25,11 +25,11 @@ export interface Grammar {
 }
 import type { LanguageCode } from "@/features/course/constants";
 export interface Lesson {
-  id: string;
+  _id: string;
 
   languageCode: LanguageCode;
 
-  courseId: string;
+  courseId?: string;
 
   courseTitle: string;
 

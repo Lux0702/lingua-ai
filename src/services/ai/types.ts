@@ -13,7 +13,7 @@ export interface GenerateLessonRequest {
 }
 
 export interface GenerateLessonResponse {
-  lesson: LessonSchema;
+  lesson: LessonSchema[];
 }
 import type { Lesson } from "@/features/lesson/types";
 

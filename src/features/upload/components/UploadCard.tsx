@@ -13,6 +13,8 @@ import {
 } from "@/components/ui/select";
 
 import { Button } from "@/components/ui/button";
+import { Course } from "@/features/course/types";
+import { useCourses } from "@/hooks/useCourses";
 
 export interface UploadRequest {
   file: File;
@@ -24,14 +26,18 @@ interface UploadCardProps {
   loading?: boolean;
 
   onUpload(request: UploadRequest): void | Promise<void>;
+  onCourseChange?: (courseId: string) => void | Promise<void>;
 }
 
-export function UploadCard({ loading = false, onUpload }: UploadCardProps) {
+export function UploadCard({ loading = false, onUpload, onCourseChange}: UploadCardProps) {
   const [file, setFile] = useState<File | null>(null);
 
   const [language, setLanguage] = useState<Language>("zh");
 
   const [level, setLevel] = useState<Level>("beginner");
+  const [courseId, setCourseId] = useState<string>("");
+  const { data: courses } = useCourses();
+
 
   function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
     const selectedFile = event.target.files?.[0];
@@ -73,7 +79,7 @@ export function UploadCard({ loading = false, onUpload }: UploadCardProps) {
               <SelectValue />
             </SelectTrigger>
 
-            <SelectContent>
+            <SelectContent position="popper" align="start">
               <SelectItem value="zh">Chinese</SelectItem>
 
               <SelectItem value="en">English</SelectItem>
@@ -96,12 +102,37 @@ export function UploadCard({ loading = false, onUpload }: UploadCardProps) {
               <SelectValue />
             </SelectTrigger>
 
-            <SelectContent>
+            <SelectContent position="popper" align="start">
               <SelectItem value="beginner">Beginner</SelectItem>
 
               <SelectItem value="intermediate">Intermediate</SelectItem>
 
               <SelectItem value="advanced">Advanced</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        <div>
+          <label className="mb-2 block text-sm font-medium">
+            Choose course(Optional)
+          </label>
+
+          <Select
+            value={courseId}
+            onValueChange={(value) => {
+              setCourseId(value);
+              onCourseChange?.(value);
+            }}
+          >
+            <SelectTrigger className="min-w-[300px]">
+              <SelectValue placeholder="Select a course to add a lesson." />
+            </SelectTrigger>
+
+            <SelectContent position="popper" align="start">
+              {courses?.map((course) => (
+                <SelectItem key={course._id} value={course._id}>
+                  {course.title}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>

@@ -1,18 +1,16 @@
 # Lesson Schema
 
-Generate ONE lesson object that strictly follows the schema below.
+Generate one or more lesson objects that strictly follow the schema below.
 
-Return valid JSON only.
+Return a valid JSON array only.
 
 Do not include markdown.
 
 Do not include explanations.
 
-Do not wrap the JSON inside another object.
-
 --------------------------------
 
-id
+_id
 
 Type:
 string
@@ -285,17 +283,34 @@ string
 
 # IMPORTANT
 
-Return ONLY ONE valid JSON object.
+Return ONLY a valid JSON array.
 
-Do NOT wrap the lesson inside:
+
+Do NOT wrap the array inside another object.
+
+Do NOT return:
 
 {
   "lesson": {}
 }
 
+Do NOT return:
+
+{
+  "lessons": []
+}
+
+Do NOT return:
+
+{
+  "data": []
+}
+
 Do NOT create a "content" object.
 
-All lesson properties must exist at the root level.
+Each element of the array must be a Lesson object.
+
+All Lesson properties must exist at the root level of each array element.
 
 Never rename any property.
 

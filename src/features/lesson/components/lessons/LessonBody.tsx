@@ -10,7 +10,6 @@ import { ExerciseCard } from "../exercises/ExerciseCard";
 import { Button } from "@/components/ui/button";
 import { useSpeech } from "@/hooks/useSpeech";
 import { useEffect } from "react";
-
 interface LessonBodyProps {
   lesson: LessonSchema;
 
@@ -26,7 +25,7 @@ export function LessonBody({ lesson, tab }: LessonBodyProps) {
   switch (tab) {
     case 0:
       return (
-        <ObjectivesCard objectives={lesson.objectives} lessonId={lesson.id} />
+        <ObjectivesCard objectives={lesson.objectives} lessonId={lesson._id} />
       );
 
     case 1:

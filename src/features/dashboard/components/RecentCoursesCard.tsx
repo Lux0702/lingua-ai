@@ -19,11 +19,11 @@ export function RecentCoursesCard({ courses }: CourseCardProps) {
         <ul className="space-y-3">
           {courses.map((course: Course) => (
             <li
-              key={course.id}
+              key={course._id}
               className="flex items-center justify-between rounded-lg border p-3"
             >
               <Link
-                href={`/courses/${course.id}`}
+                href={`/courses/${course._id}`}
                 className="transition hover:bg-transparent"
               >
                 <div className="flex items-center justify-between gap-2">

@@ -2,7 +2,7 @@
 
 import { useParams } from "next/navigation";
 
-import { getLesson } from "@/features/lesson/services/storage";
+import { useLesson } from "@/hooks/useLessons";
 
 import { QuizPlayer } from "@/features/practice/components/quiz/QuizPlayer";
 
@@ -12,7 +12,7 @@ export function QuizPage() {
     lessonId: string;
   }>();
 
-  const lesson = getLesson(lessonId);
+  const {data:lesson} =useLesson(lessonId)
 
 
   if (!lesson) {
@@ -25,7 +25,7 @@ export function QuizPage() {
     <QuizPlayer
       title={lesson.title}
       exercises={lesson.exercises}
-      lessonId={lesson.id}
+      lessonId={lesson._id}
       courseId={lesson.courseId}
       saveProgress
     />

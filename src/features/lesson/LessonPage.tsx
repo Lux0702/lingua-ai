@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import { Link } from "next-view-transitions";
 
-import { getLesson } from "@/features/lesson/services/storage";
+import { getLessonById } from "@/lib/api/lesson.api";
 import { Progress } from "@/components/ui/progress";
 import { LessonHeader } from "./components/lessons/LessonHeader";
 import { LessonTabs } from "./components/lessons/LessonTabs";
@@ -12,12 +12,23 @@ import { LessonBody } from "./components/lessons/LessonBody";
 import { Button } from "@/components/ui/button";
 import { TOTAL_TABS } from "./constants";
 import { useTransitionRouter } from "next-view-transitions";
+
+import { useLesson } from "@/hooks/useLessons";
+
+
 export function LessonPage() {
-  const { lessonId } = useParams();
-  const lesson = getLesson(lessonId as string);
+  const { lessonId } = useParams<{
+    lessonId: string;
+  }>();
+  const { data: lesson, isLoading } = useLesson(lessonId);
+
   const router = useTransitionRouter();
   const [tab, setTab] = useState(0);
 
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
   if (!lesson) {
     return <p>Lesson not found.</p>;
   }
@@ -51,14 +62,14 @@ export function LessonPage() {
         </Button>
         {tab === 6 ? (
           <div className="flex justify-end pt-8">
-            <Button onClick={() => router.push(`/quiz?lessonId=${lesson.id}`)}>
+            <Button onClick={() => router.push(`/quiz?lessonId=${lesson._id}&courseId=${lesson.courseId}`)}>
               Practice with AI →
             </Button>
           </div>
         ) : tab === TOTAL_TABS - 2 ? (
           <Button asChild>
             <Link
-              href={`/courses/${lesson.courseId}/lessons/${lesson.id}/practice`}
+              href={`/courses/${lesson.courseId}/lessons/${lesson._id}/practice`}
             >
               Finish & Practice 🎉
             </Link>

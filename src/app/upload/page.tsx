@@ -20,7 +20,7 @@ export default function UploadPage() {
   const [loading, setLoading] = useState(false);
   const router = useTransitionRouter();
 
-  const [lesson, setLesson] = useState<GenerateLessonResponse | null>(null);
+  const [lesson, setLesson] = useState<GenerateLessonResponse | null >(null);
 
   async function handleUpload({ file, language, level }: UploadRequest) {
     try {
@@ -69,7 +69,7 @@ export default function UploadPage() {
   function handleSave() {
     if (!lesson) return;
 
-    saveLesson(lesson.lesson);
+    // saveLesson(lesson.lesson);
     router.push("/");
 
     console.log("Save lesson", lesson.lesson);
@@ -85,7 +85,7 @@ export default function UploadPage() {
         </div>
       )}
 
-      {lesson && <LessonPreview lesson={lesson.lesson} onSave={handleSave} />}
+      {lesson && <LessonPreview lessons={lesson.lesson} onSave={handleSave} />}
     </main>
   );
 }

@@ -1,46 +1,50 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { use, useEffect, useMemo, useState } from "react";
 
-import { getLessons } from "@/features/lesson/services/storage";
-import { getCourses } from "@/features/course/services/storage";
+import { getCourses } from "@/lib/api/course.api";
+import { getLessonsByCourseId } from "@/lib/api/lesson.api";
 
 import type { Lesson } from "@/features/lesson/types";
 import type { Course } from "@/features/course/types";
+import { useCourses } from "@/hooks/useCourses";
+import { useLessonsByCourseId } from "@/hooks/useLessons";
 
 export function useDashboard() {
-  const [lessons, setLessons] = useState<Lesson[]>([]);
-  const [courses, setCourses] = useState<Course[]>([]);
+  const { data: courses, isLoading: coursesLoading } = useCourses();
+  const { data: lessons, isLoading: lessonsLoading } = useLessonsByCourseId(
+    courses?.[0]?._id ?? "",
+  );
 
-  useEffect(() => {
-    setLessons(getLessons());
-    setCourses(getCourses());
-  }, []);
+  const loading = coursesLoading || lessonsLoading;
+
+
 
   const stats = useMemo(
     () => [
       {
         id: "courses",
         title: "Courses",
-        value: String(courses.length),
+        value: String(courses?.length ?? 0),
       },
       {
         id: "lessons",
         title: "Lessons",
-        value: String(lessons.length),
+        value: String(lessons?.length ?? 0),
       },
       {
         id: "vocabulary",
         title: "Vocabulary",
         value: String(
-          lessons.reduce((sum, lesson) => sum + lesson.vocabulary.length, 0),
+          lessons?.reduce((sum, lesson) => sum + lesson.vocabulary.length, 0) ??
+            0,
         ),
       },
       {
         id: "languages",
         title: "Languages",
         value: String(
-          new Set(lessons.map((lesson) => lesson.languageCode)).size,
+          new Set((lessons ?? []).map((lesson) => lesson.languageCode)).size,
         ),
       },
     ],
@@ -48,13 +52,15 @@ export function useDashboard() {
   );
 
   const recentLessons = useMemo(() => {
+    if (!lessons) return [];
+
     const map = new Map<string, Lesson>();
 
     [...lessons]
       .sort((a, b) => b.lessonNumber - a.lessonNumber)
       .forEach((lesson) => {
-        if (!map.has(lesson.courseId)) {
-          map.set(lesson.courseId, lesson);
+        if (!map.has(lesson.courseId ?? "")) {
+          map.set(lesson.courseId ?? "", lesson);
         }
       });
 
@@ -62,12 +68,14 @@ export function useDashboard() {
   }, [lessons]);
 
   return {
+    loading,
+
     stats,
 
     recentLessons,
 
     continueLesson: recentLessons[0] ?? null,
 
-    recentCourses: courses,
+    recentCourses: courses ?? [],
   };
 }
