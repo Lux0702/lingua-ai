@@ -4,7 +4,7 @@ import { useTransitionRouter } from "next-view-transitions";
 
 interface ObjectivesCardProps {
   objectives: string[];
-  lessonId: string;
+  lessonId?: string;
 }
 
 export function ObjectivesCard({ objectives, lessonId }: ObjectivesCardProps) {
