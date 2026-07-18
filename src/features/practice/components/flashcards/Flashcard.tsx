@@ -29,7 +29,14 @@ export function Flashcard({ vocabulary, flipped, onFlip }: FlashcardProps) {
         {/* Front */}
         <Card className="absolute inset-0  shadow-xl flex items-center justify-center rounded-2xl [backface-visibility:hidden]">
           <div className="space-y-4 text-center">
-            <h1 className="text-5xl font-bold">{vocabulary.word}</h1>
+            <h1 className="text-5xl font-bold">
+              {vocabulary.word}
+          <br/>
+              <span className="text-2xl font-medium">
+                {vocabulary.pronunciation}
+              </span>
+            </h1>
+
             <Button
               variant="ghost"
               size="icon"
