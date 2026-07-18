@@ -36,7 +36,7 @@ const notoKR = Noto_Sans_KR({
 });
 
 export const metadata: Metadata = {
-  title: "Polyglot AI",
+  title: "Lingua AI",
   description: "AI-powered language learning platform",
 };
 

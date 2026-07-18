@@ -7,7 +7,7 @@ export function Header() {
     <header className="flex h-16 items-center justify-between border-b bg-background px-6">
       {/* Left */}
       <div className="flex items-center gap-4">
-        <h1 className="text-lg font-semibold">Polyglot AI</h1>
+        <h1 className="text-lg font-semibold">Lingua AI</h1>
       </div>
 
       {/* Center */}
