@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 
 import type { Vocabulary } from "@/features/lesson/types";
-
+import { useSpeech } from "@/hooks/useSpeech";
 export function useFlashcards(cards: Vocabulary[]) {
   const [index, setIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);

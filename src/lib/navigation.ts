@@ -6,7 +6,7 @@ import {
   BookText,
   ClipboardCheck,
   Bot,
-  ChartColumn,
+  CalendarCheck,
   Settings,
 } from "lucide-react";
 
@@ -46,11 +46,11 @@ export const navigation = [
     href: "/ai-tutor",
     icon: Bot,
   },
-  // {
-  //   title: "Progress",
-  //   href: "/progress",
-  //   icon: ChartColumn,
-  // },
+  {
+    title: "Progress",
+    href: "/progress",
+    icon: CalendarCheck,
+  },
   // {
   //   title: "Settings",
   //   href: "/settings",
