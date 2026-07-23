@@ -6,3 +6,15 @@ export const api = axios.create({
     "Content-Type": "application/json",
   },
 });
+
+api.interceptors.request.use((config) => {
+  if (typeof window === "undefined") return config;
+
+  const token = window.localStorage.getItem("polyglot-access-token");
+  if (token) {
+    const tokenType = window.localStorage.getItem("polyglot-token-type") ?? "Bearer";
+    config.headers.Authorization = `${tokenType} ${token}`;
+  }
+
+  return config;
+});

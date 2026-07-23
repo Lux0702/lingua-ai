@@ -1,4 +1,5 @@
-import { Bell, Moon, Search } from "lucide-react";
+import { Bell, Moon } from "lucide-react";
+import { Link } from "next-view-transitions";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
@@ -25,7 +26,9 @@ export function Header() {
           <Moon className="h-5 w-5" />
         </Button>
 
-        <Button variant="outline">User</Button>
+        <Button variant="outline" asChild>
+          <Link href="/login">Đăng nhập</Link>
+        </Button>
       </div>
     </header>
   );

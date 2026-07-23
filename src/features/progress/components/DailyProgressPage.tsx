@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Check, ChevronLeft, ChevronRight, Flame, PencilLine } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { getMonthlyProgress, getMonthlyProgressStats, syncProgress } from "@/features/progress/services/progress.api";
 
 type DailyEntry = {
   completed: boolean;
@@ -44,11 +46,15 @@ function getStreak(entries: DailyEntries) {
   return streak;
 }
 
+function monthKey(date: Date) {
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
+}
+
 export function DailyProgressPage() {
   const today = startOfDay(new Date());
   const [currentMonth, setCurrentMonth] = useState(new Date(today.getFullYear(), today.getMonth(), 1));
   const [selectedDate, setSelectedDate] = useState(today);
-  const [entries, setEntries] = useState<DailyEntries>(() => {
+  const [localEntries, setLocalEntries] = useState<DailyEntries>(() => {
     if (typeof window === "undefined") return {};
 
     try {
@@ -57,10 +63,29 @@ export function DailyProgressPage() {
       return {};
     }
   });
+  const queryClient = useQueryClient();
 
   useEffect(() => {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
-  }, [entries]);
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(localEntries));
+  }, [localEntries]);
+
+  const currentMonthKey = monthKey(currentMonth);
+  const progressQuery = useQuery({
+    queryKey: ["progress", currentMonthKey],
+    queryFn: () => getMonthlyProgress(currentMonthKey),
+  });
+  const statsQuery = useQuery({
+    queryKey: ["progress", "stats", currentMonthKey],
+    queryFn: () => getMonthlyProgressStats(currentMonthKey),
+  });
+  const syncMutation = useMutation({
+    mutationFn: syncProgress,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["progress"] });
+    },
+  });
+
+  const entries = { ...(progressQuery.data ?? {}), ...localEntries };
 
   const selectedKey = dateKey(selectedDate);
   const selectedEntry = entries[selectedKey] ?? { completed: false, note: "" };
@@ -72,18 +97,20 @@ export function DailyProgressPage() {
     );
   }, [currentMonth]);
 
-  const completedThisMonth = calendarDays.filter((day) => day && entries[dateKey(day)]?.completed).length;
-  const streak = getStreak(entries);
+  const completedThisMonth = statsQuery.data?.completedDays ?? calendarDays.filter((day) => day && entries[dateKey(day)]?.completed).length;
+  const streak = statsQuery.data?.currentStreak ?? getStreak(entries);
 
   function selectDate(date: Date) {
     setSelectedDate(date);
   }
 
   function updateSelectedEntry(update: Partial<DailyEntry>) {
-    setEntries((current) => ({
-      ...current,
+    const nextEntries = {
+      ...entries,
       [selectedKey]: { ...selectedEntry, ...update },
-    }));
+    };
+    setLocalEntries(nextEntries);
+    syncMutation.mutate(nextEntries);
   }
 
   return (
@@ -93,6 +120,7 @@ export function DailyProgressPage() {
           <p className="text-sm font-medium text-primary">Hành trình học tập</p>
           <h1 className="text-3xl font-bold tracking-tight">Progress hằng ngày</h1>
           <p className="mt-1 text-muted-foreground">Điểm danh và lưu lại những điều bạn đã học mỗi ngày.</p>
+          {(progressQuery.isError || statsQuery.isError || syncMutation.isError) && <p className="mt-2 text-sm text-destructive">Không thể đồng bộ Progress với máy chủ. Dữ liệu mới vẫn được lưu tạm trên trình duyệt.</p>}
         </div>
         <div className="flex items-center gap-2 rounded-lg bg-orange-50 px-4 py-2 text-orange-700 dark:bg-orange-950/40 dark:text-orange-300">
           <Flame className="size-5 fill-current" />
