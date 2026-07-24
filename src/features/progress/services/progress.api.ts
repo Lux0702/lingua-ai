@@ -59,6 +59,11 @@ export async function syncProgress(entries: Record<string, DailyProgressEntry>) 
   await api.put("/progress/sync", { entries });
 }
 
+/** Creates the progress entry when it does not exist, otherwise updates it. */
+export async function upsertDailyProgress(date: string, entry: DailyProgressEntry) {
+  await api.put(`/progress/${date}`, entry);
+}
+
 export async function getMonthlyProgressStats(month: string) {
   const response = await api.get<unknown>("/progress/stats", { params: { month } });
   const payload = asRecord(unwrap(response.data)) ?? {};

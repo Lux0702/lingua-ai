@@ -1,5 +1,9 @@
 import { api } from "@/lib/api/axios";
 
+const AUTH_SESSION_EVENT = "polyglot-auth-session-change";
+let cachedSessionValue: string | null | undefined;
+let cachedSession: AuthSession | null = null;
+
 export type AuthCredentials = {
   email: string;
   password: string;
@@ -45,4 +49,45 @@ export function saveAuthSession(session: AuthSession) {
   window.localStorage.setItem("polyglot-access-token", session.accessToken);
   window.localStorage.setItem("polyglot-token-type", session.tokenType);
   window.localStorage.setItem("polyglot-auth-session", JSON.stringify(session));
+  window.dispatchEvent(new Event(AUTH_SESSION_EVENT));
+}
+
+export function subscribeToAuthSession(callback: () => void) {
+  window.addEventListener(AUTH_SESSION_EVENT, callback);
+  window.addEventListener("storage", callback);
+
+  return () => {
+    window.removeEventListener(AUTH_SESSION_EVENT, callback);
+    window.removeEventListener("storage", callback);
+  };
+}
+
+export function getStoredAuthSession(): AuthSession | null {
+  if (typeof window === "undefined") return null;
+
+  try {
+    const rawSession = window.localStorage.getItem("polyglot-auth-session");
+    if (rawSession === cachedSessionValue) {
+      if (cachedSession && Date.parse(cachedSession.expiresAt) <= Date.now()) cachedSession = null;
+      return cachedSession;
+    }
+
+    cachedSessionValue = rawSession;
+    if (!rawSession) {
+      cachedSession = null;
+      return null;
+    }
+
+    const session = JSON.parse(rawSession) as AuthSession;
+    if (!session.accessToken || !session.user?.displayName || Number.isNaN(Date.parse(session.expiresAt)) || Date.parse(session.expiresAt) <= Date.now()) {
+      cachedSession = null;
+      return null;
+    }
+
+    cachedSession = session;
+    return cachedSession;
+  } catch {
+    cachedSession = null;
+    return null;
+  }
 }
